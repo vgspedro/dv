@@ -1,0 +1,122 @@
+<style type="text/css">
+.bgimg-1 {background-image: url('{{ asset('images/bg.jpg') }}')}
+</style>
+
+<section class="bgimg-1 w3-display-container" id="top">
+  <div class="w3-left w3-hide-large w3-hide-medium hamburger" style="position: fixed;z-index: 999">
+    <span class="w3-button w3-text-black w3-transparent w3-text-aqua-green-hover w3-hover-none" onclick="mobileNav()">
+    <i class="w3-xxlarge fa fa-bars"></i>
+  </span>
+  </div>
+  <nav class="w3-animate-left w3-hide-small" style="z-index:3;width:190px;height:100%"><br>
+    <div class="w3-container">
+    </div>
+    <div class="w3-bar-block w3-center">
+    
+    {% for menu in menus %}
+      <button class="w3-xlarge w3-text-aqua-green-hover w3-hover-none w3-button w3-padding" onclick="navigation('{{ menu.tag }}',0)">
+        <b class="w3-xxxlarge {{ menu.class }}" style="line-height: 40px">{{ menu.name|raw }}</b>
+      </button>
+    {% endfor %}
+
+    </div>
+    <div class="w3-large w3-center" style="position: absolute;bottom: 32px;left: 16px">
+      <div class="w3-col s6">
+        <h2 class="w3-left-align">
+          <button class="w3-xxxlarge w3-text-aqua-green-hover w3-hover-none w3-button" onclick="userLocale('pt',0)">
+            <b class="w3-border-top w3-border-transparent locale-pt">PT</b>
+          </button>
+        </h2>
+      </div>
+      <div class="w3-col s6">
+        <h2 class="w3-right-align">
+          <button class="w3-xxxlarge w3-text-aqua-green-hover w3-hover-none w3-button" onclick="userLocale('en',0)">
+            <b class="locale-en w3-border-top w3-border-black">EN</b>
+          </button>
+        </h2>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col s12">
+          <button style="overflow: inherit" class="w3-btn hexagon-40-bw w3-hover-aqua-green w3-text-white" onclick='window.open()'>
+            <div class="hex-btn-txt" style="left:10px"><i class="w3-xlarge fa fa-facebook"></i></div>
+          </button>
+          <button style="overflow: inherit" class="w3-btn hexagon-40-bg w3-hover-aqua-green w3-text-aqua-green" onclick='window.open()'>
+            <div class="hex-btn-txt" style="left: 5px;top:-1px"><i class="fa fa-behance w3-xlarge"></i></div>
+          </button>
+          <button style="overflow: inherit" class="w3-btn hexagon-40-bw w3-text-white w3-hover-aqua-green" onclick='window.open()'>
+            <div class="hex-btn-txt" style="left:8px;top: -2px"><i class="fa fa-linkedin w3-xlarge"></i></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <nav class="w3-animate-left w3-hide-medium w3-hide-large w3-hide" style="z-index:99;width:190px;height:100%; background:rgba(255,255,255,0.65);position: fixed;min-height: 600px" id="sidebar">
+
+    <div class="w3-container">
+  <span class="w3-button w3-transparent w3-right w3-text-aqua-green-hover w3-hover-none" onclick="mobileNav()">
+    <i class="w3-xxlarge fa fa-times"></i>
+  </span>
+
+  </div>
+    <div class="w3-bar-block w3-center">
+
+    {% for menu in menus %}
+      <button class="w3-xlarge w3-text-aqua-green-hover w3-hover-none w3-button w3-padding" onclick="navigation('{{ menu.tag }}',1)">
+        <b class="w3-xxxlarge {{ menu.class }}" style="line-height: 40px">{{ menu.name|raw }}</b>
+      </button>
+    {% endfor %}
+
+    </div>
+    <div class="w3-large w3-center" style="position: absolute;bottom: 32px;left: 16px">
+      <div class="w3-col s6">
+        <h2 class="w3-left-align">
+          <button class="w3-xxxlarge w3-text-aqua-green-hover w3-hover-none w3-button" onclick="userLocale('pt',1)">
+            <b class="w3-border-top w3-border-transparent locale-pt">PT</b>
+          </button>
+        </h2>
+      </div>
+      <div class="w3-col s6">
+        <h2 class="w3-right-align">
+          <button class="w3-xxxlarge w3-text-aqua-green-hover w3-hover-none w3-button" onclick="userLocale('en',1)">
+            <b class="locale-en w3-border-top w3-border-black">EN</b>
+          </button>
+        </h2>
+      </div>
+      <div class="w3-row">
+        <div class="w3-col s12">
+          <button style="overflow: inherit" class="w3-btn hexagon-40-bw w3-hover-aqua-green w3-text-white" onclick='window.open()'>
+            <div class="hex-btn-txt" style="left:10px"><i class="w3-xlarge fa fa-facebook"></i></div>
+          </button>
+          <button style="overflow: inherit" class="w3-btn hexagon-40-bg w3-hover-aqua-green w3-text-aqua-green" onclick='window.open()'>
+            <div class="hex-btn-txt" style="left: 5px;top:-1px"><i class="fa fa-behance w3-xlarge"></i></div>
+          </button>
+          <button style="overflow: inherit" class="w3-btn hexagon-40-bw w3-text-white w3-hover-aqua-green" onclick='window.open()'>
+            <div class="hex-btn-txt" style="left:8px;top: -2px"><i class="fa fa-linkedin w3-xlarge"></i></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+	<div class="w3-display-middle w3-text-black w3-center">
+
+			<span class="w3-animate-top w3-hide-medium w3-hide-small" style="margin-left:-140px;font-size:250px">
+        <i class="fa fa-chevron-right"></i>
+        <i style="position:absolute; top: 88px;left: 122px" class="fa fa-chevron-down"></i>
+      </span>
+
+      <span class="w3-animate-top w3-hide-large w3-hide-small" style="margin-left:-110px;font-size:200px">
+        <i class="fa fa-chevron-right"></i>
+        <i style="position:absolute;top:68px;left: 96px" class="fa fa-chevron-down"></i>
+      </span>
+
+      <span class="w3-animate-top w3-hide-medium w3-hide-large" style="margin-left:-70px;font-size:120px">
+        <i class="fa fa-chevron-right"></i>
+        <i style="position:absolute;top: 42px;left: 58px" class="fa fa-chevron-down"></i>
+      </span>
+
+	</div>
+
+</section>
+

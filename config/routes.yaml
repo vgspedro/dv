@@ -1,0 +1,11 @@
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+
+email:
+    path: /email
+    controller: App\Controller\HomeController::email
+
+index_translate:
+    path: /translate
+    controller: App\Controller\TranslationController::translate

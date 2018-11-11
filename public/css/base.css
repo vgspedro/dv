@@ -98,7 +98,8 @@ html,body,a,h1,h2,h3,h4,h5,p,a,span,dv {font-family: Myriad!important}
 
 .w3-aqua-green{background: #67FDD0}
 .w3-text-aqua-green{color: #67FDD0!important}
-.w3-text-aqua-green-hover:hover{color: #DDD!important}
+.w3-text-aqua-green-hover{border-bottom:3px solid transparent}
+.w3-text-aqua-green-hover:hover{border-bottom:3px solid black}
 .w3-border-aqua-green{border: 1px solid #67FDD0}
 .w3-hover-aqua-green:hover{color:#000!important;background-color:#67FDD0!important}
 .center-circle-100{margin:0 auto;height: 175px;width: 175px}

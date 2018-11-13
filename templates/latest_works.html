@@ -45,7 +45,7 @@ h2{margin: 0px!important}
       
       <li class="hex">
         <div class="hexIn">
-          <a class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('{{latestWorks[i].id}}, {{latestWorks[i].html | raw}}')">
+          <a class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('{{latestWorks[i].id}}')">
             <input type="hidden" id="html-{{latestWorks[i].id}}" value="{{latestWorks[i].html | raw}}">
             <h2 class="w3-text-aqua-green w3-xxlarge w3-hide-medium w3-hide-small" style="top: calc(50% - 75px)">{{latestWorks[i].name | raw}}</h2>
             <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-small" style="top: calc(50% - 52px);">{{latestWorks[i].name | raw}}</h2>
@@ -62,7 +62,7 @@ h2{margin: 0px!important}
       </li>
       <li class="hex">
         <div class="hexIn">
-          <a class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('{{latestWorks[k+1].name}}, {{latestWorks[k+1].html | raw}} ')">
+          <a class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('{{latestWorks[k+1].name}}')">
             <input type="hidden" id="html-{{latestWorks[k+1].id}}" value="{{latestWorks[k+1].html | raw}}">
             <h2 class="w3-text-aqua-green w3-xxlarge w3-hide-medium w3-hide-small" style="top: calc(50% - 75px)">{{latestWorks[k+1].name | raw }}</h2>
             <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-small" style="top: calc(50% - 52px);">{{latestWorks[k+1].name | raw }}</h2>

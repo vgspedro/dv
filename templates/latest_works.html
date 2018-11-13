@@ -1,130 +1,72 @@
 <style type="text/css">
 .bgimg-2 {background-image: url('{{ asset('images/bg_2.jpg') }}')}
-.hexLink:hover{background: rgba(0,0,0,1)!important}  
+.hexLink:hover{background: rgba(0,0,0,1)!important}
+h2{margin: 0px!important}
 </style>
 
 <section class="w3-container bgimg-2 w3-padding-16 w3-white latest-works">
-
-	<div class="w3-row-padding w3-padding-16">
-		<div class="w3-col s12 w3-margin-bottom">
-      <h2 class="w3-margin-left"><b class="w3-jumbo w3-text-gray LATEST_WORKS_INLINE">LATEST WORKS</b></h2>
+  <div class="w3-row-padding w3-padding-16" style="max-width:1410px;margin:0 auto">
+  <div class="w3-row-padding w3-padding-16">
+    <div class="w3-col s12 w3-margin-bottom">
+      <h2 class="w3-margin-left ">
+          <b class="w3-jumbo w3-text-gray LATEST_WORKS_INLINE">LATEST WORKS</b></h2>
     </div>
 
     <ul id="hexGrid" style="padding-left: 0px">
+
+      {% set y = 4 %}
+      {% for i in range(1, y) %}
+      
       <li class="hex w3-hide">
         <div class="hexIn"></div>
       </li>
-      <li class="hex w3-hide">
-        <div class="hexIn"></div>
-      </li>
-      <li class="hex w3-hide">
-        <div class="hexIn"></div>
-      </li>
-      <li class="hex w3-hide">
-        <div class="hexIn"></div>
-      </li>
+      
+      {% endfor %}
+      
       <li class="hex hex-hide-900">
         <div class="hexIn"></div>
       </li>
       <li class="hex">
         <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
+          <a class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('{{latestWorks[0].id}}')">
+            <input type="hidden" id="html-{{latestWorks[0].id}}" value="{{latestWorks[0].html | raw}}">
+            <h2 class="w3-text-aqua-green w3-xxlarge w3-hide-medium w3-hide-small" style="top: calc(50% - 75px)">{{latestWorks[0].name}}</h2>
+            <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-small" style="top: calc(50% - 52px)">{{latestWorks[0].name}}</h2>
+            <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-medium" style="top: calc(50% - 87px)">{{latestWorks[0].name}}</h2>    
           </a>
         </div>
       </li>
       <li class="hex hex-hide-900">
         <div class="hexIn"></div>
       </li>
+
+      {% set k = 11 %}
+      {% for i in range(1, k) %}
+      
       <li class="hex">
         <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-           <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-          <div class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('educar')">
-            <h2 class="w3-text-aqua w3-xxxlarge w3-hide-medium w3-hide-small" style="top: calc(50% - 58px)">EDUCAR</h2>
-            <h2 class="w3-text-aqua w3-xxlarge w3-hide-large w3-hide-small" style="top: calc(50% - 52px);">EDUCAR</h2>
-            <h2 class="w3-text-aqua w3-xxxlarge w3-hide-large w3-hide-medium" style="top: calc(50% - 54px);">EDUCAR</h2>
-          </div>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-           <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-          <a class="hexLink black-75" >
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-           <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
-          </a>
-        </div>
-      </li>
-      <li class="hex">
-        <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
+          <a class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('{{latestWorks[i].id}}, {{latestWorks[i].html | raw}}')">
+            <input type="hidden" id="html-{{latestWorks[i].id}}" value="{{latestWorks[i].html | raw}}">
+            <h2 class="w3-text-aqua-green w3-xxlarge w3-hide-medium w3-hide-small" style="top: calc(50% - 75px)">{{latestWorks[i].name | raw}}</h2>
+            <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-small" style="top: calc(50% - 52px);">{{latestWorks[i].name | raw}}</h2>
+            <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-medium" style="top: calc(50% - 54px);">{{latestWorks[i].name | raw}}</h2> 
           </a>
         </div>
       </li>
 
+      {% endfor %}
+      
       <li class="hex hex-hide-900">
         <div class="hexIn">
         </div>
       </li>
-      
       <li class="hex">
         <div class="hexIn">
-          <a class="hexLink black-75">
-            <h2 class="w3-text-aqua w3-xxlarge"></h2>
+          <a class="hexLink black-75" style="cursor:pointer" onclick="seeWorks('{{latestWorks[k+1].name}}, {{latestWorks[k+1].html | raw}} ')">
+            <input type="hidden" id="html-{{latestWorks[k+1].id}}" value="{{latestWorks[k+1].html | raw}}">
+            <h2 class="w3-text-aqua-green w3-xxlarge w3-hide-medium w3-hide-small" style="top: calc(50% - 75px)">{{latestWorks[k+1].name | raw }}</h2>
+            <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-small" style="top: calc(50% - 52px);">{{latestWorks[k+1].name | raw }}</h2>
+            <h2 class="w3-text-aqua-green w3-xlarge w3-hide-large w3-hide-medium" style="top: calc(50% - 54px);">{{latestWorks[k+1].name | raw}}</h2>
           </a>
         </div>
       </li>
@@ -133,5 +75,6 @@
         </div>
       </li>
     </ul>
-	</div>
+  </div>
+  </div>
 </section>

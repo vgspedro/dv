@@ -46,8 +46,9 @@ $("#submit-info").on('submit',function(e){
 
 
 function seeWorks(w){
-   $('#set-works').html(w)
- $('#modal-works').show()
+  var obj = $('#html-'+w).val() 
+  $('#set-works').html(obj)
+  $('#modal-works').show()
 }
 
 

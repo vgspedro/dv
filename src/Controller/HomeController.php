@@ -117,26 +117,19 @@ class HomeController extends AbstractController
     }
 
     private function latestWorks(){
-        $latest_works[] = array('name'=>'ZOOMARINE 25TH ANNIVERSARY', 'id' => 1, 
-            
-            'html' =>'<div class=\'w3-center w3-padding-32\'><b>clica no logo</b><br>
-            <a target=\'_blank\' href=\'https://www.zoomarine.pt/pt\'>
-            <img src=\'https://www.zoomarine.pt/assets/zoomarine/img/logo.png\'>
-            </a></div>'
-            );
-
-        $latest_works[] = array('name'=>'CAPTAIN´S<br>KITCHEN', 'id' => 2, 'html' =>'');
-        $latest_works[] = array('name'=>'HALLOWEEN<br>ZOOMARINE', 'id' => 3, 'html' =>'');
-        $latest_works[] = array('name'=>'EDUCAR', 'id' => 4, 'html' =>'');
-        $latest_works[] = array('name'=>'MARINE MEGAFAUNA', 'id' => 5, 'html' =>'');
-        $latest_works[] = array('name'=>'ICE GOURMET', 'id' => 6, 'html' =>''); 
-        $latest_works[] = array('name'=>'TARUGA<br>TOURS', 'id' => 7, 'html' =>'');
-        $latest_works[] = array('name'=>'SOMODEL', 'id' => 8, 'html' =>'');
-        $latest_works[] = array('name'=>'IMATA<br>BAHAMAS', 'id' => 9, 'html' =>'');
-        $latest_works[] = array('name'=>'<br>SUPERÉME', 'id' => 10, 'html' =>'');
-        $latest_works[] = array('name'=>'FESTAS DE<br>LISBOA', 'id' => 11, 'html' =>'');
-        $latest_works[] = array('name'=>'FARELO', 'id' => 12, 'html' =>'');
-        $latest_works[] = array('name'=>'HELVIS', 'id' => 13, 'html' =>'');
+        $latest_works[] = array('name'=>'ZOOMARINE 25TH ANNIVERSARY', 'id' => 1, 'html' => $this->render('1.html')->getContent());
+        $latest_works[] = array('name'=>'CAPTAIN´S<br>KITCHEN', 'id' => 2, 'html' => $this->render('2.html')->getContent());
+        $latest_works[] = array('name'=>'HALLOWEEN<br>ZOOMARINE', 'id' => 3, 'html' => $this->render('3.html')->getContent());
+        $latest_works[] = array('name'=>'EDUCAR', 'id' => 4, 'html' => $this->render('4.html')->getContent());
+        $latest_works[] = array('name'=>'MARINE MEGAFAUNA', 'id' => 5, 'html' => $this->render('5.html')->getContent());
+        $latest_works[] = array('name'=>'ICE GOURMET', 'id' => 6, 'html' => $this->render('6.html')->getContent());
+        $latest_works[] = array('name'=>'TARUGA<br>TOURS', 'id' => 7, 'html' => $this->render('7.html')->getContent());
+        $latest_works[] = array('name'=>'SOMODEL', 'id' => 8, 'html' => $this->render('8.html')->getContent());
+        $latest_works[] = array('name'=>'IMATA<br>BAHAMAS', 'id' => 9, 'html' => $this->render('9.html')->getContent());
+        $latest_works[] = array('name'=>'<br>SUPERÉME', 'id' => 10, 'html' => $this->render('10.html')->getContent());
+        $latest_works[] = array('name'=>'FESTAS DE<br>LISBOA', 'id' => 11, 'html' => $this->render('11.html')->getContent());
+        $latest_works[] = array('name'=>'FARELO', 'id' => 12, 'html' => $this->render('12.html')->getContent());
+        $latest_works[] = array('name'=>'HELVIS', 'id' => 13, 'html' => $this->render('13.html')->getContent());
         return $latest_works;
     }
 

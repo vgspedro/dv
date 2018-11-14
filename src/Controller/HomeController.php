@@ -88,10 +88,10 @@ class HomeController extends AbstractController
         $skills[] = array('border'=>'#6E5400', 'img'=>'images/js.png', 'name'=>'JAVASCRIPT<br>&nbsp;', 'alt'=>'javascript','percentage'=>95);
         $skills[] = array('border'=>'#791900', 'img'=>'images/html5.png', 'name'=>'HTML5<br>&nbsp;', 'alt'=>'html5','percentage'=>95);
         $skills[] = array('border'=>'#014574', 'img'=>'images/html3.png', 'name'=>'CSS3<br>&nbsp;', 'alt'=>'css3 ','percentage'=>90);
-        $skills[] = array('border'=>'#FFE4B7', 'img'=>'images/mysql.png', 'name'=>'MYSQL<br>&nbsp;', 'alt'=>'mysql, pdo, orm, doctrine, mysqli','percentage'=>80);
-        $skills[] = array('border'=>'#000000', 'img'=>'images/sf.png', 'name'=>'SYMFONY<br>&nbsp;', 'alt'=>'symfony','percentage'=>85);
+        $skills[] = array('border'=>'#FFE4B7', 'img'=>'images/mysql.png', 'name'=>'MYSQL<br>&nbsp;', 'alt'=>'mysql, pdo, orm, doctrine, mysqli','percentage'=>65);
+        $skills[] = array('border'=>'#000000', 'img'=>'images/sf.png', 'name'=>'SYMFONY<br>&nbsp;', 'alt'=>'symfony','percentage'=>75);
         $skills[] = array('border'=>'#EAFFB4', 'img'=>'images/twig.jpg', 'name'=>'TWIG<br>&nbsp;', 'alt'=>'twig','percentage'=>70);
-        $skills[] = array('border'=>'#222430', 'img'=>'images/php.jpg', 'name'=>'PHP<br>&nbsp;', 'alt'=>'php','percentage'=>80);
+        $skills[] = array('border'=>'#222430', 'img'=>'images/php.jpg', 'name'=>'PHP<br>&nbsp;', 'alt'=>'php','percentage'=>87);
         return $skills;
     } 
 

@@ -1,9 +1,18 @@
 <style type="text/css">
 .bgimg-4 {background-image: url('{{ asset('images/bg_4.jpg') }}')}
+.circle-chart__circle {
+  animation: circle-chart-fill 2s reverse;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+@keyframes circle-chart-fill {
+  to { stroke-dasharray: 0 100; }
+}
 </style>
 
 <section class="bgimg-4 w3-container w3-padding-16 w3-white skills">
-	<div class="w3-row-padding w3-padding-16">
+	<div class="w3-row-padding w3-padding-16" style="max-width:1410px;margin:0 auto">
 		<div class="w3-col s12">
       <h2 class="w3-margin-left"><b class="w3-jumbo w3-text-gray SKILLS">SKILLS</b></h2>
     </div>
@@ -15,7 +24,10 @@
         <div class="hexagon-110-{{loop.index}}">
           <img style="width:64px" src="{{ skill.img}}" alt="{{ skill.alt}}">
         </div>
-        <div class="w3-circle center-circle-100 {{ cycle(['loader-even','loader-odd'],loop.index) }}" style="border: 10px solid {{ skill.border }}"></div>
+        <svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="175" height="175" xmlns="http://www.w3.org/2000/svg">
+          <circle class="circle-chart__background" stroke="#d3d3d3" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />
+          <circle class="circle-chart__circle" stroke="{{skill.border}}" stroke-width="2" stroke-dasharray="{{ skill.percentage }},100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />
+        </svg>
       </div>
       <p class="w3-text-gray w3-xlarge">{{ skill.name|raw }}</p>
     </div>
@@ -23,3 +35,5 @@
 
 	</div>
 </section>
+
+

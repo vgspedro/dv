@@ -71,6 +71,7 @@
         "symfony/symfony": "*"
     },
     "extra": {
+        "public-dir": "public_html",
         "symfony": {
             "allow-contrib": false
         }

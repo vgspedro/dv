@@ -192,6 +192,7 @@ html,body,a,h1,h2,h3,h4,h5,p,a,span,dv {font-family: Myriad!important}
 body{min-width:275px!important}
 
 
+/*
 .hexagon-40 {
   position: relative;
   width: 40px; 
@@ -219,6 +220,8 @@ body{min-width:275px!important}
   width: 0;
   border-top: 11.55px solid #67FDD0;
 }
+*/
+
 
 
 .hexagon-40-bw {
@@ -258,17 +261,14 @@ body{min-width:275px!important}
 }
 
 
-
-
-
 .hexagon-40-bg {
   position: relative;
   width: 40px; 
   height: 23.09px;
   background-color: #000000;
   margin: 11.55px 0;
-  border-left: solid 3px #67FDD0;
-  border-right: solid 3px #67FDD0;
+  border-left: solid 2px #67FDD0;
+  border-right: solid 2px #67FDD0;
 }
 
 .hexagon-40-bg:before,
@@ -287,15 +287,102 @@ body{min-width:275px!important}
 
 .hexagon-40-bg:before {
   top: -14.1421px;
-  border-top: solid 4.2426px #67FDD0;
-  border-right: solid 4.2426px #67FDD0;
+  border-top: solid 2.8284px #67FDD0;
+  border-right: solid 2.8284px #67FDD0;
 }
 
 .hexagon-40-bg:after {
   bottom: -14.1421px;
-  border-bottom: solid 4.2426px #67FDD0;
-  border-left: solid 4.2426px #67FDD0;
+  border-bottom: solid 2.8284px #67FDD0;
+  border-left: solid 2.8284px #67FDD0;
 }
+
+
+
+.hexagon-90-bw {
+  position: relative;
+  width: 90px; 
+  height: 51.96px;
+  background-color: #000000;
+  margin: 25.98px 0;
+  border-left: solid 2px #ffffff;
+  border-right: solid 2px #ffffff;
+}
+
+.hexagon-90-bw:before,
+.hexagon-90-bw:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 63.64px;
+  height: 63.64px;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background-color: inherit;
+  left: 11.1802px;
+}
+
+.hexagon-90-bw:before {
+  top: -31.8198px;
+  border-top: solid 2.8284px #ffffff;
+  border-right: solid 2.8284px #ffffff;
+}
+
+.hexagon-90-bw:after {
+  bottom: -31.8198px;
+  border-bottom: solid 2.8284px #ffffff;
+  border-left: solid 2.8284px #ffffff;
+}
+
+
+
+
+
+
+
+.hexagon-90-bg {
+  position: relative;
+  width: 90px; 
+  height: 51.96px;
+  background-color: #000000;
+  margin: 25.98px 0;
+  border-left: solid 4px #00ffff;
+  border-right: solid 4px #00ffff;
+}
+
+.hexagon-90-bg:before,
+.hexagon-90-bg:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 63.64px;
+  height: 63.64px;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background-color: inherit;
+  left: 9.1802px;
+}
+
+.hexagon-90-bg:before {
+  top: -31.8198px;
+  border-top: solid 5.6569px #00ffff;
+  border-right: solid 5.6569px #00ffff;
+}
+
+.hexagon-90-bg:after {
+  bottom: -31.8198px;
+  border-bottom: solid 5.6569px #00ffff;
+  border-left: solid 5.6569px #00ffff;
+}
+
+
+
+
+
+
+
 
 .hex-btn-txt {z-index: 2;position: absolute;top: 1px}
 
@@ -582,86 +669,3 @@ input:-moz-placeholder { /* Firefox 18- */
   width: 0;
   border-top: 21.65px solid rgba(0,0,0,0.5);
 }
-
-
-
-
-.hexagon-90-bw {
-  position: relative;
-  width: 90px; 
-  height: 51.96px;
-  background-color: #000000;
-  margin: 25.98px 0;
-  border-left: solid 2px #ffffff;
-  border-right: solid 2px #ffffff;
-}
-
-.hexagon-90-bw:before,
-.hexagon-90-bw:after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: 63.64px;
-  height: 63.64px;
-  -webkit-transform: scaleY(0.5774) rotate(-45deg);
-  -ms-transform: scaleY(0.5774) rotate(-45deg);
-  transform: scaleY(0.5774) rotate(-45deg);
-  background-color: inherit;
-  left: 11.1802px;
-}
-
-.hexagon-90-bw:before {
-  top: -31.8198px;
-  border-top: solid 2.8284px #ffffff;
-  border-right: solid 2.8284px #ffffff;
-}
-
-.hexagon-90-bw:after {
-  bottom: -31.8198px;
-  border-bottom: solid 2.8284px #ffffff;
-  border-left: solid 2.8284px #ffffff;
-}
-
-
-
-
-
-
-
-.hexagon-90-bg {
-  position: relative;
-  width: 90px; 
-  height: 51.96px;
-  background-color: #000000;
-  margin: 25.98px 0;
-  border-left: solid 4px #67FDD0;
-  border-right: solid 4px #67FDD0;
-}
-
-.hexagon-90-bg:before,
-.hexagon-90-bg:after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: 63.64px;
-  height: 63.64px;
-  -webkit-transform: scaleY(0.5774) rotate(-45deg);
-  -ms-transform: scaleY(0.5774) rotate(-45deg);
-  transform: scaleY(0.5774) rotate(-45deg);
-  background-color: inherit;
-  left: 9.1802px;
-}
-
-.hexagon-90-bg:before {
-  top: -31.8198px;
-  border-top: solid 5.6569px #67FDD0;
-  border-right: solid 5.6569px #67FDD0;
-}
-
-.hexagon-90-bg:after {
-  bottom: -31.8198px;
-  border-bottom: solid 5.6569px #67FDD0;
-  border-left: solid 5.6569px #67FDD0;
-}
-
-

@@ -1,6 +1,7 @@
 
 html,body,a,h1,h2,h3,h4,h5,p,a,span,dv {font-family: Myriad!important}
 
+
 .set-margin{margin-top:-60px}
 
 .w3-button, .w3-btn{outline-style: none}
@@ -491,14 +492,11 @@ input:-moz-placeholder { /* Firefox 18- */
   opacity: 1;
 }
 
-
-
 .hexagon-560 {
   position: relative;
   width: 560px; 
   height: 323.32px;
   margin: 161.66px 0;
-  background-image: url(http://images.catchnews.com/upload/2016/02/27/pause-key-in-keyboard_730x419.jpg);
   background-size: auto 646.6323px;
   background-position: center;
   margin:0 auto!important
@@ -567,10 +565,12 @@ input:-moz-placeholder { /* Firefox 18- */
 .font-30{font-size: 30px}
 
 @media screen and (max-width: 650px) {
+  .zoom-out{zoom:75%}
   .hexagon-560 {
-    background-image: none;
+    background-image: none!important;
     width: 100%;
   }
+
   .hexagon{width: 100%; border:none;margin: 0px}
   .hexagon:after, .hexagon:before, .hexBottom, .hexTop {display: none}
   .hex-container{padding: 0px 0px 80px 0px!important}

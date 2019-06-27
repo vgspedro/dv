@@ -7,8 +7,9 @@
 }
 
 @keyframes circle-chart-fill {
-  to { stroke-dasharray: 0 100; }
+  to { stroke-dasharray: 0 100}
 }
+
 </style>
 
 <section class="bgimg-4 w3-container w3-padding-16 w3-white skills">
@@ -19,7 +20,7 @@
 
     {% for skill in skills %}
 
-    <div class="w3-center w3-col s12 m6 l3">
+    <div class="w3-center w3-col s6 m6 l3 zoom-out">
       <div class="w3-padding-8 set-margin">
         <div class="hexagon-110-{{loop.index}}">
           <img style="width:64px" src="{{ skill.img}}" alt="{{ skill.alt}}">

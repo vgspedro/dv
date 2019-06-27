@@ -27,6 +27,7 @@ class TranslationController extends AbstractController
         return array(
             'error' => 'Erro',
             'success' => 'Sucesso',
+            'success_txt' => 'Pedido submetido, obrigado.',
             'close' =>'Fechar',
             'sorry' => 'Lamentamos',
             'required' => 'Obrigatório *',
@@ -71,6 +72,7 @@ class TranslationController extends AbstractController
         return array(
             'error' => 'Error',
             'success' => 'Success',
+            'success_txt' => 'Request submitted, Thank you.',
             'close' =>'Close',
             'sorry'=>'Sorry',
             'required'=>'Required *',

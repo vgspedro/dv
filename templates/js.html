@@ -22,7 +22,7 @@ $("#submit-info").on('submit',function(e){
         cache: false,
         data: $('#submit-info').serialize(),
         success: function(data){
-          console.log(data)
+          //console.log(data)
           $('.w3-overlay').hide()
 
           if (data.status == 1){
@@ -94,6 +94,7 @@ function userLocale(locale, mobile){
         $(".SORRY").text(data.sorry)
         $(".WIFIERROR").text(data.wifi_error)
         $(".SUCCESS").text(data.success)
+        $(".SUCCESS_TXT").text(data.success_txt)
         $(".THANKYOU").text(data.thank_you)
         $(".REQUIRED").text(data.required)
         $(".CHECK").text(data.check)

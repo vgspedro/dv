@@ -1,0 +1,113 @@
+<style>
+ li { list-style-type:none}
+ ul{padding: 0px}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {border: 3px solid transparent!important} 
+ .w3-input {border-bottom: 0px solid #05788d}
+</style>
+<header class="w3-container" style="padding-top:22px">
+    <h5>
+      <b>
+        <i class="fas fa-project-diagram"></i> {%trans%}category{%endtrans%} <i class="far fa-edit fa-fw"></i>
+    </b>
+  </h5>
+</header>
+
+<div class="">
+  {{ form_start(form, {'attr': {'id': 'category-form'}})  }}
+
+  <div class="w3-row-padding w3-border w3-sand w3-padding-16">
+
+    <input type="hidden" value="{{category.id}}" name="id">
+    <div class="w3-col s12 l2 m4">
+      <label>&nbsp;</label><br>
+      {{ form_widget(form.is_active)}} {{ form_label(form.is_active)}}
+    </div>
+  </div>
+
+  <div class="w3-row-padding w3-border w3-sand w3-padding-16">
+
+   {% for locale in locales%}
+
+    <div class="w3-col s12 l4 m6">
+
+      <label>{% trans %}text{% endtrans %} {% set k = locale.name|split('_') %} {{ k[1] }}</label>
+      <div class="w3-row">
+        <div class="w3-col" style="width:45px">
+          <img src="{{locale.filename}}" style="height:45px" class="w3-border" title="{{locale.name}}">
+        </div>
+        <div class="w3-rest">
+
+        {% for translated in category.Translation %}
+          {% if locale.id == translated.locales.id %}
+
+          <input type="text" data-translated-id="{{translated.id}}" data-locale-id="{{locale.id}}" name="locale" class="w3-input w3-border w3-white" value="{{translated.name}}" placeholder="{{locale.name}}">
+        
+          {% endif %}
+        {% endfor %}
+        
+        <input type="hidden" name="translated">
+
+        </div>
+      </div>
+    </div>
+
+        {% endfor %}
+
+      <div class="w3-hide">
+        {{ form_widget(form.submit)}}
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+
+<script>
+
+  var loadFile = function(event) {
+    $('.set-image-container').html('<img id="output" class="w3-image w3-animate-zoom">')
+    var output = document.getElementById('output')
+    output.src = URL.createObjectURL(event.target.files[0])
+  }
+
+$('#category-form').on('submit',function(e){
+  e.preventDefault()
+  obj=''
+  $('.w3-overlay').show()
+
+  arr = []
+
+  $('input[name=locale]').each(function( index ) {
+    arr.push({id:$(this).attr('data-translated-id'), name:$(this).val(), locale_id:$(this).attr('data-locale-id')})
+  })
+
+  $('input[name=translated]').val(JSON.stringify(arr))
+
+  $('.required').addClass('w3-hide')
+    $.ajax({
+      url:'{{ path('admin_category_edit') }}',
+      type: "POST",
+      data: new FormData($(this)[0]),
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function(data){  
+        $('.w3-overlay').hide()
+        if (data.status == 1){
+          ajaxUpload('category-list')
+          $('#modal-edit-category').hide()
+          $('#category-form').trigger('reset')
+        }
+        else {
+          for(i=0; i<data.data.length;i++)
+            obj += data.data[i]+'<br>'
+          $('#set-fields').html(obj)
+          $('#modal-fields').show()
+        }
+      },
+      error:function(data){
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+})
+</script>
+

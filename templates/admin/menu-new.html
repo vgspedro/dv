@@ -1,0 +1,118 @@
+
+<style>
+li { list-style-type:none}
+ul{padding: 0px}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {border: 0px solid #FFF!important}
+.w3-input {border-bottom: 0px solid #05788d}
+input, select, textarea {color: #000!important}
+
+</style>
+<header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fas fa-ellipsis-v"></i> {%trans%}menu{%endtrans%} <i class="far fa-plus-square fa-fw"></i></b></h5>
+</header>
+
+<div class="w3-padding-16 w3-container">
+
+<div class="w3-border w3-sand">  
+
+  {{ form_start(form, {'attr': {'id': 'menu-form'}})  }}
+
+<div class="w3-row-padding w3-margin-top w3-border-bottom">
+    <div class="w3-col s12 l2 m4 w3-margin-bottom">
+      {{ form_label(form.is_active)}}<br>
+      {{ form_widget(form.is_active)}} 
+    </div>
+  </div>
+  <div class="w3-row-padding w3-margin-top w3-border-bottom">
+    {%for locale in locales %}
+    <div class="w3-col s12 l4 m6 w3-margin-bottom">
+      <label>{% trans %}text{% endtrans %} {% set k = locale.name|split('_') %} {{ k[1] }}</label>
+      
+      <div class="w3-row">
+        <div class="w3-col" style="width:45px">
+          <img src="{{locale.getFilename}}" style="height:45px" class="w3-border" title="{{locale.name}}">
+        </div>
+        <div class="w3-rest">
+          <input type="text" data-local-id='{{locale.id}}' class="w3-input w3-border w3-white" placeholder="{{locale.name}}">
+        </div>
+      </div>
+    </div>
+    
+    {% endfor %}
+
+<div class="w3-row-padding menu-translation">
+</div>
+
+
+    <div class="w3-hide">
+      {{ form_widget(form.submit)}}
+    </div>
+  </div>
+    <div class="w3-row-padding w3-margin-top w3-border-bottom">
+      <div class="w3-col s12 w3-margin-bottom">
+        <span class="w3-btn w3-border w3-green w3-right w3-margin-top" onclick="$('#menu-form').trigger('submit')">
+            <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+          </span>
+      </div>
+  </div>
+    {{ form_end(form) }}
+
+  </div>
+</div>
+
+<script>
+
+function addItemFormp($collectionHolder, $newLinkDiv, locale, index) {
+    var prototype = $collectionHolder.data('prototype')
+    var newForm = prototype
+
+    newForm = newForm.replace(/__name__/g, index)
+    newForm = newForm.replace(/<div>/g, '')
+  
+    var $newFormDiv = $('<div class="w3-col l4 m6 s12"></div>').html(newForm)
+    $newLinkDiv.append($newFormDiv)
+    $('#menu_translation_'+index+'_locales').val(locale)
+  }
+
+  {%for locale in locales %}
+    addItemFormp($('#menu_translation'), $('.menu-translation'), {{locale.id}}, {{loop.index0}})
+  {% endfor %}
+  
+  $('#menu-form').on('submit',function(e){
+  obj=''
+
+  arr = []
+
+  $('input[type=text').each(function( index ) {
+    arr.push({id:$(this).attr('data-local-id'), name:$(this).val()})
+  })
+
+  e.preventDefault()
+  $('.w3-overlay').show()
+  $('.required').addClass('w3-hide')
+    $.ajax({  
+      url:'{{ path('admin_menu_add') }}',
+      type: "POST",
+      data: $('#category-form').serialize()+'&locale='+JSON.stringify(arr),
+      success: function(data){  
+        console.log(data)
+        $('.w3-overlay').hide()
+        if (data.status == 1){
+          ajaxUpload('category-new')
+        }
+        else {
+          for(i=0;i<data.data.length;i++)
+            obj += data.data[i]+'<br>'
+          $('#set-fields').html(obj)
+          $('#modal-fields').show()
+        }
+      },
+      error:function(data){
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+  //}, 500)
+})
+</script>
+

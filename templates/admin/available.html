@@ -1,0 +1,392 @@
+<link href="{{ asset('fullcalendar/packages/core/main.css') }}" rel='stylesheet' />
+<link href="{{ asset('fullcalendar/packages/daygrid/main.css') }}" rel='stylesheet' />
+<link href="{{ asset('fullcalendar/packages/timegrid/main.css') }}" rel='stylesheet' />
+<link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+
+<script src="{{ asset('fullcalendar/packages/core/main.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/interaction/main.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/daygrid/main.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/timegrid/main.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/resource-common/main.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/resource-daygrid/main.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/resource-timegrid/main.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/popper.min.js') }}"></script>
+<script src="{{ asset('fullcalendar/packages/tooltip.min.js') }}"></script>
+
+<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/ui.datepicker-pt-BR.js') }}"></script>
+
+<style>
+.fa, .far, .fas {font-family: Font Awesome\ 5 Free!important}
+.w3-input {border-bottom: 0px solid #05788d}
+input, select, textarea {color: #000!important}
+.fc-left, .fc-right, .fc-center{padding: 4px 6px}
+.fc-event{border-radius: 0px;}
+.alert-info, .alert-info>th, .alert-info>td {background-color:rgba(0,100,90,0.2)!important}
+.fc-button{padding: 8px 16px!important;vertical-align: middle;overflow: hidden;
+    text-decoration: none;color: inherit;background-color: #FFF!important;text-align: center;
+    height: auto!important;cursor: pointer;white-space: nowrap;border-radius:0px!important}
+.fc-time-grid .fc-bgevent, .fc-time-grid .fc-event { margin:1px}
+.fc-list-item{border-bottom: 1px solid #DDD}
+.fc-resource-cell{font-size:16px}
+.fc-state-hover{background: #eee!important; box-shadow:0 8px 16px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)}
+.fc-center h2{font-size: 23px}
+.fc-time-grid-event{cursor: pointer}
+.fc-license-message{display: none!important}
+</style>
+
+<script>
+
+var obj =''
+
+$('.w3-overlay').show()
+
+function getResources(t) {
+
+  var d = new Date()
+  var start = d.getTime()
+  var end = d.getTime()+86400*2
+  var template = ''
+  
+  $.ajax({
+    url: '{{ path("admin_available_list") }}',
+    data:'start='+start+'&end='+end,
+    dataType: 'json',
+    cache:false,
+    success: function(data) {
+      //console.log(data)
+      startCalendar(data)
+      for (var k in data.resources)
+        template += '<span class="w3-padding-small w3-padding-16 w3-border w3-border-gray w3-text-white" style="width:25%;background-color:'+data.resources[k].eventColor+';margin:2px 2px">'+data.resources[k].title+' <button title="{%trans%}edit{%endtrans%}" onclick="resourceActions('+data.resources[k].id+',\''+data.resources[k].title+'\', '+data.resources[k].lotation+',\''+data.resources[k].eventColor+'\')" class="w3-blue w3-btn w3-border" style="padding:4px 14px"><i class="far fa-edit"></i></button></span>'
+      $('#legend').html(template)
+    }
+  })
+}
+
+
+var calendar = ''
+
+function startCalendar(data){
+
+    calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+    plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
+    defaultView: 'dayGridMonth',
+    defaultDate: '{{ "now"|date("Y-m-d H:i:s") }}',
+    editable: false,
+    height: 'auto',
+    businessHours: {
+      daysOfWeek: [ 0, 1, 2, 3, 4, 5, 6 ], // Monday - Thursday
+      startTime: '8:00', // a start time (10am in this example)
+      endTime: '20:00', // an end time (6pm in this example)
+    },
+    buttonIcons: {
+      prev: ' fa-chevron-left fa',
+      next: ' fa-chevron-right fa',
+    },
+    minTime : '8:00:00',
+    maxTime : '20:00:00',
+    slotLabelFormat: [
+    { hour: '2-digit',
+      minute: '2-digit'
+    }
+    ],
+    slotMinutes: 15,
+    slotDuration: '00:15:00',
+    slotLabelInterval: 15,
+    selectable: false,
+    locale: 'pt',
+    hour12: false,
+    nowIndicator: true,
+    titleFormat: {
+      month: '2-digit',
+      year: 'numeric',
+      day: '2-digit',
+    },
+    eventLimit: true, // allow "more" link when too many events
+    header: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'resourceTimeGridTwoDay,resourceTimeGridTreeDay,dayGridMonth'
+    },
+    views: {
+      resourceTimeGridTwoDay: {
+        type: 'resourceTimeGrid',
+        duration: { days: 2 },
+        buttonText: '2 Dias'
+      },
+      resourceTimeGridTreeDay: {
+        type: 'resourceTimeGrid',
+        duration: { days: 3 },
+        buttonText: '3 Dias'
+      },
+      dayGridMonth: {
+        buttonText: 'Mês',
+        hour12: true
+      }
+    },
+    eventRender: function(info) {
+      var tooltip = new Tooltip(info.el, {
+        title: info.event.extendedProps.description,
+        placement: 'top',
+        trigger: 'hover',
+        container: 'body'
+      });
+    },
+    allDaySlot: false,
+    resourceOrder: 'order',
+    resources: data.resources,
+    // events: data.events,
+    events: function(info, successCallback, failureCallback) {
+      $.ajax({
+        url: '{{ path("admin_available_list") }}',
+        data:'start='+info.start.valueOf()/1000+'&end='+info.end.valueOf()/1000,
+        dataType: 'json',
+        cache:false,
+        success: function(info) {
+          //console.log(info.events)
+          ev = info.events
+          successCallback(ev)
+        }
+      })
+    },
+    dateClick: function(arg) {
+      console.log(
+        'dateClick',
+        arg.date,
+        arg.resource ? arg.resource.id : '(no resource)'
+      );
+    },
+    eventClick: function(info) {
+      $("#modal-edit-stock").show()
+      var evt = info.event.textColor.split("**");
+      $('#set-stock-id').val(info.event.id)
+      $('#set-stock-lotation').val(evt[1])
+      $('#set-stock-available').val(evt[0])
+      $('#set-stock-info').html(evt[2])
+      info.el.style.borderColor = 'red'
+
+    },
+      eventRender: function(info) {
+        $(info.el).addClass('evt-'+info.event.id)
+    }
+  });
+  calendar.render()
+}
+
+setTimeout(function(){
+  getResources()
+},0)
+
+$('#add').next().remove()
+
+function editAvailable(){
+$('.w3-overlay').show()
+  setTimeout(function(){
+    $.ajax({  
+      url:'{{ path('admin_available_edit') }}',
+      type: "POST",
+      cache:false,
+      data: $('#set-stock').serialize(),
+      dataType:'json',
+      success: function(data){
+        $('.w3-overlay').hide()
+        if(data.status == 1){
+          $('#modal-edit-stock').hide()
+          calendar.refetchEvents()
+        }
+        else {
+          $('#info-client').show()                
+          $('#info-client-head').removeClass('w3-green w3-red w3-amber').addClass('w3-blue').html('<span onclick="$(\'#info-client\').hide()" class="w3-button w3-display-topright w3-large"><i class="fa fa-times"></i></span><h1><i class="fa fa-info-circle"></i> {%trans%}check{%endtrans%}</h1>')
+          $('#client-txt').html(data.message)
+        }
+      },
+      error:function(data){
+        $('#modal-edit-stock').hide()
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+  }, 500)
+}
+
+
+function deleteAvailable(){
+  $('.w3-overlay').show()
+  setTimeout(function(){
+    $.ajax({  
+      url:'{{ path('admin_available_delete') }}',
+      type: "POST",
+      cache:false,
+      data: $('#set-stock').serialize(),
+      dataType:'json',
+      success: function(data){
+        $('.w3-overlay').hide()
+        $("#modal-edit-stock").hide()
+        if(data.status == 1)
+          calendar.refetchEvents()
+        else{
+          $('#info-client').show()                
+          $('#info-client-head').removeClass('w3-green w3-red w3-amber').addClass('w3-blue').html('<span onclick="$(\'#info-client\').hide()" class="w3-button w3-display-topright w3-large"><i class="fa fa-times"></i></span><h1><i class="fa fa-info-circle"></i> {%trans%}check{%endtrans%}</h1>')
+          $('#client-txt').html(data.message)
+        }
+      },
+      error:function(data){
+        $('#modal-edit-stock').hide()
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+  }, 500)
+}
+
+function resourceActions(id, resource, lotation, color){
+  $('#startDate, #endDate').datepicker('clearDates')
+  $('#resource-action').trigger('reset')
+  $('.stock-hide').removeClass('w3-hide')
+  $('.resource-color').css('background', color)
+  $("#resource-title").html(resource)
+  $('#set-max-stock').html(' Máx: '+lotation)
+  $('.set-max-stock').prop('max', lotation)
+  $("input[name=resource-id]").val(id)
+  $('#modal-edit-resource').show()  
+}
+
+function resourceAction(){
+
+  $('.w3-overlay').show()
+
+  setTimeout(function(){
+    $.ajax({  
+      url:'{{ path('admin_available_resources_actions') }}',
+      type: "POST",
+      cache: false,
+      data: $('#resource-action').serialize(),
+      dataType:'json',
+      success: function(data){
+        $('.w3-overlay').hide()
+        if(data.status == 1){
+          $('#startDate, #endDate').datepicker('clearDates')
+          $('#modal-edit-resource').hide()
+          $('#info-client').show()                
+          $('#info-client-head').removeClass('w3-red w3-amber w3-blue').addClass('w3-green').html('<span onclick="$(\'#info-client\').hide()" class="w3-button w3-display-topright w3-large"><i class="fa fa-times"></i></span><h1><i class="fa fa-check"></i> {%trans%}success{%endtrans%}</h1>')
+          $('#client-txt').html(data.message).addClass('w3-center')
+          calendar.refetchEvents()
+        }
+        else{
+          $('#info-client').show()                
+          $('#info-client-head').removeClass('w3-green w3-red w3-amber').addClass('w3-blue').html('<span onclick="$(\'#info-client\').hide()" class="w3-button w3-display-topright w3-large"><i class="fa fa-times"></i></span><h1><i class="fa fa-info-circle"></i> {%trans%}check{%endtrans%}</h1>')
+          $('#client-txt').html(data.message)
+        }
+      },
+      error:function(data){
+        $('#modal-edit-stock').hide()
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+  }, 500)
+}
+
+
+$(function(){
+  $('input[type=radio]').click(function() {
+    $(this).val() == 0 ? $('.stock-hide').addClass('w3-hide') : $('.stock-hide').removeClass('w3-hide')
+  })
+
+  jQuery('#startDate').datepicker({
+      language:'pt-BR',
+      format: 'dd/mm/yyyy',
+      weekStart: 1,
+      todayHighlight: true,
+      autoclose: true,
+    }).on("changeDate",function (e) {
+      jQuery('#endDate').datepicker("setStartDate", e.date)
+    })
+
+    jQuery('#endDate').datepicker({
+      language:'pt-BR',
+      format: 'dd/mm/yyyy',
+      todayHighlight: true,
+      weekStart: 1,
+      autoclose: true
+    }).on("changeDate",function (e) {
+      jQuery('#startDate').datepicker("setEndDate", e.date)
+    })
+  })
+
+
+</script>
+
+<input type="hidden" id="obj">
+
+<header class="w3-container" style="padding-top:22px">
+   <h5><b><i class="far fa-calendar-check"></i> {%trans%}available{%endtrans%}</b></h5>
+</header>
+
+<div id='calendar' style="padding-bottom:64px"></div>
+
+<div class="w3-hide-small w3-row w3-center w3-padding-16" style="background:rgba(0, 0, 0, 0.8);position:fixed;bottom:0px;z-index:99;width:100%">
+  <div id="legend" class="w3-center"></div>
+</div>
+
+<div id="modal-edit-resource" class="w3-modal" style="z-index: 9999999; padding-top: 64px; padding-bottom: 32px">
+  <div class="w3-animate-top">
+  </div>
+
+  <div class="w3-modal-content w3-sand w3-animate-zoom" style="max-width: 450px">
+    <div class="w3-container w3-text-white w3-padding resource-color">
+      <span onclick="$('#modal-edit-resource').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-calendar-check"></i> {%trans%}available{%endtrans%}
+        <p class="w3-center"id="resource-title"></p>
+      </h2>
+    </div>
+
+    <div class="w3-row-padding w3-margin-top">
+    <form id="resource-action">
+      <p class="w3-large w3-center"> {%trans%}choose_action{%endtrans%}<br>
+      <span class="w3-text-red w3-center w3-small"> {%trans%}on_save_action_is_done{%endtrans%}</span>
+      </p>
+      <div class="w3-row-padding w3-border-bottom w3-border-top w3-padding-16">
+        <input type="radio" checked name="action" value="1" class="w3-radio" style="cursor:pointer"> {%trans%}edit_stock_between_dates{%endtrans%}<br>
+        <span class="w3-text-red w3-center w3-small"> {%trans%}max_available_product{%endtrans%}</span><br>
+        <input type="radio" name="action" value="0" class="w3-radio" style="cursor:pointer"> {%trans%}delete_between_dates{%endtrans%}<br>
+        <span class="w3-text-red w3-center w3-small"> {%trans%}deleted_only_nobookings{%endtrans%}</span> 
+      </div>
+      <div class="w3-row-padding w3-padding-16">
+
+        <div class="w3-col m6 s12 w3-margin-bottom">
+          <label>{%trans%}start{%endtrans%} *</label>
+          <input class="w3-input w3-border w3-white" id="startDate" name="start-date" readonly type="text" placeholder="{%trans%}start{%endtrans%} *">
+        </div>
+
+        <div class="w3-col m6 s12 w3-margin-bottom">
+          <input type="hidden" name="resource-id">
+          <label>{%trans%}end{%endtrans%} *</label>
+          <input class="w3-input w3-border w3-white" id="endDate" name="end-date" readonly type="text" placeholder="{%trans%}end{%endtrans%} *">
+        </div>
+      
+        <div class="w3-col m6 s12 w3-margin-bottom stock-hide">
+          <label>Stock *<span class="w3-red w3-padding-small w3-opacity-min" id="set-max-stock"></span></label>
+          <input class="w3-input w3-border w3-white set-max-stock" type="number" min="0" name="stock" placeholder="Stock *">
+        </div>
+      
+      </div>
+
+    </form>
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="resourceAction()">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-resource').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+

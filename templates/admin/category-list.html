@@ -1,0 +1,173 @@
+<style>
+ .dt-button{background: #FFF;border:1px solid #ccc;
+ display: inline-block; padding: 8px 16px; vertical-align: middle;overflow: hidden;text-decoration: none; color: inherit;
+    background-color: inherit;text-align: center; cursor: pointer; white-space: nowrap;color: #000!important;background-color: #87CEEB!important;font-size:18px}
+select.input-sm, input .form-control .input-sm {height: 36px}
+table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
+    height: 24px;width: 24px;border-radius: 16px; text-align: center;line-height: 23px;font-size: 24px;border-radius: 0px;border: 1px solid #ddd;box-shadow: 0 0 0 #000}
+table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child, table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child {padding-left: 38px}
+.dt-button-collection{ width:100%;background: rgba(0,0,0,0.3);position: fixed;left:0px;padding: 96px 16px; z-index:99999;margin-top: 0px!important;top:0px}
+.w3-input {border-bottom: 0px solid #05788d}
+input, select, textarea {color: #000!important}
+.form-control{ border: 1px solid #ccc!important;height: 50px;padding: 0px 0px 0px 4px;padding-bottom: 0px}
+div.dataTables_length select {height: 50px}
+table.dataTable thead > tr > th {padding-left: 8px!important}
+
+</style>
+
+<header class="w3-container" style="padding-top:22px">
+   <h5><b><i class="fas fa-project-diagram"></i> {%trans%}category{%endtrans%}</b></h5>
+</header>
+<div class="w3-row-padding">
+  <div class="w3-col s12">
+
+ <div style="overflow-x:auto">
+
+  <table id="dataTable" class="w3-border table table-striped centered hover table-bordered" style="width:100%">
+    <thead class="w3-sand">
+      <tr>
+      <th class="w3-hide">#</th>
+      <th class="w3-center" style="width:102px">{%trans%}actions{%endtrans%}</th>
+      <th class="w3-center">{%trans%}active{%endtrans%}</th>
+      {% for locale in locales%}
+      <th class="w3-center">
+        <img class="w3-opacity-min w3-border" style="width:36px" src='{{locale.filename}}'>
+      </th>
+      {% endfor%}
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in categories%}
+      <td class="w3-hide">{{c.id}}</td>
+      <td class="w3-center">
+        <div style="width:110px;max-width:110px">
+           <button class="w3-btn w3-border w3-blue" onclick="editCategory({{ c.id}})">
+            <i class="far fa-edit fa-fw"></i>
+          </button>
+          <button class="w3-btn w3-border w3-red" style="width: 19px" onclick="deleteCategoryConfirm({{ c.id}},'{{c.locales_translated[0].name}}')">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        <div>
+        </td>
+        <td class="w3-center">
+          {% if c.is_active == 1 %}
+            <i class="w3-text-green w3-xlarge fas fa-check-circle"></i>
+          {% else %}
+            <i class="w3-text-red w3-xlarge fas fa-times-circle"></i>
+          {% endif %}
+        </td>
+        {% for locale in locales%}
+        <td>
+          {% for translated in c.locales_translated %}
+            {% if locale.id == translated.local_id %}
+            {{translated.name}}
+            {% endif %}
+        {% endfor %}
+        </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot class="w3-sand">
+      <tr>
+        <td class="w3-hide"></td>
+        <td></td>
+        {% for locale in locales%}
+        <td></td>
+        {% endfor%}
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+</div>
+</div>
+
+<script>
+ 
+stored = []
+
+function editCategory(id){
+
+  $('.w3-overlay').show()
+  setTimeout(function(){
+  $.ajax({  
+    url:'{{ path('admin_category_show_edit') }}',
+    type: "POST",
+    data:'id='+id,
+    success: function(data){
+      $('.w3-overlay').hide()
+      $('#set-id').text(id)
+      $('#set-category').html(data)
+      $('#modal-edit-category').show()
+      if (data.status == 1){
+        $('#info-client').show()                
+        $('#info-client-head').removeClass('w3-red').addClass('w3-green').html('<span onclick="$(\'#info-client\').hide()" class="w3-button w3-display-topright w3-large"><i class="fa fa-times"></i></span><h1><i class="fa fa-check"></i> {%trans%}success{%endtrans%}</h1>')
+        $('#client-txt').html('')
+      }
+    },
+    error:function(data){
+      $('.w3-overlay').hide()
+      $('#modal-error').show()
+    }
+  })
+  }, 500)
+}
+
+function deleteCategoryConfirm(id,n){
+  $('#delete-category').html('<p class="w3-center w3-large">{%trans%}sure_delete{%endtrans%} <b>'+n+'</b> ?</p>')
+  $('#delete-id').val(id)
+  $('#modal-delete-category').show()
+}
+
+function deleteCategory(id){
+  $('.w3-overlay').show()
+  setTimeout(function(){
+    $.ajax({  
+      url:'{{ path('admin_category_delete') }}',
+      type: "POST",
+      data:'id='+id,
+      success: function(data){
+        $('.w3-overlay').hide()
+        if (data.status == 1){
+          $('#modal-delete-category').hide()
+          ajaxUpload('category-list')
+        }
+      },
+      error:function(data){
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+  }, 500)
+}
+
+$(function(){
+  table = $('#dataTable').DataTable({
+    dom: 'lfrtip',
+    columnDefs: [
+        {
+          "targets": stored,
+          "visible": false
+        }
+    ],
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      responsive: false,
+      searching: true,
+      language: {
+        "lengthMenu": "{%trans%}show{%endtrans%} _MENU_ {%trans%}per_page{%endtrans%}",
+        "zeroRecords": "0 {%trans%}results{%endtrans%}",
+        "info": "{%trans%}show{%endtrans%} _PAGE_ {%trans%}of{%endtrans%} _PAGES_",
+        "infoEmpty": "{%trans%}without{%endtrans%} {%trans%}results{%endtrans%}",
+        "search": "{%trans%}search{%endtrans%}",
+        "paginate": {
+        "previous": "{%trans%}previous{%endtrans%}",
+        "next": "{%trans%}next{%endtrans%}",
+      }
+    }
+  })
+  $('#dataTable_length, .dt-buttons').addClass('w3-center w3-col s12 m6 l4 w3-section')
+  $('#dataTable_filter').addClass('w3-col s8 m12 l4 w3-center w3-section')
+})
+
+</script>

@@ -1,0 +1,247 @@
+
+<link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+<style>
+
+li { list-style-type:none}
+ul{padding: 0px}
+.timepicker{background:#FFF;border:1px solid #DDD;padding: 8px 0px}
+.bootstrap-datetimepicker-widget table td span {border-radius: 0px}
+.bootstrap-datetimepicker-widget table td span:hover {background: #DDD}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {border: 0px solid #FFF!important}
+.w3-input {border-bottom: 0px solid #05788d}
+input, select, textarea {color: #000!important}
+.w3-select{padding: 11.5px 4px}
+.note-editor.note-frame .note-editing-area .note-codable{color:#DDD!important}
+.note-editor.note-frame{border-color:#CCC}
+div > label:nth-child(1n+1){margin-top: 6px}
+span.product_price_0{opacity:0.5;cursor: not-allowed}
+.note-toolbar{position:relative!important;top:0px!important;width:100%!important}
+</style>
+
+<header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-tags"></i> {%trans%}product_23{%endtrans%} <i class="far fa-plus-square fa-fw"></i></b></h5>
+</header>
+
+<div class="w3-container">
+    <div class="w3-border w3-sand">
+    
+      {{ form_start(form, {'attr': {'id': 'product-form'}})  }}
+
+      <div class="w3-row-padding w3-margin-top w3-border-bottom">
+
+        <div class="w3-col l4 m3 s0">&nbsp;</div>
+
+        <div class="w3-col l4 m6 s12 w3-center w3-margin-bottom" title="{%trans%}add_image{%endtrans%}">
+          <div class="w3-white w3-center w3-margin-bottom w3-border w3-imput w3-section set-image-container w3-padding" style="cursor:pointer"onclick="$('.set-image').trigger('click')">
+            <i class="fa fa-camera w3-jumbo" style="color:#05788d"></i>
+          </div>
+          {{ form_widget(form.image)}}
+        </div>    
+      </div>
+ 
+      <div class="w3-row-padding w3-margin-top w3-border-bottom">
+
+        <div class="w3-col s6 l3 m6" title="{%trans%}highlight{%endtrans%}">
+            <span class="w3-margin-right">{{ form_label(form.highlight)}}</span>
+          {{ form_widget(form.highlight)}}
+        </div>
+
+        <div class="w3-col s6 l3 m6" title="{%trans%}active{%endtrans%}">
+          <span class="w3-margin-right">{{ form_label(form.is_active)}}</span>
+          {{ form_widget(form.is_active)}} 
+        </div>
+
+        <div class="w3-col s6 l3 m6 w3-margin-bottom" title="{%trans%}duration{%endtrans%}">
+          <div style="position:relative">
+            {{ form_label(form.duration) }}
+            {{ form_widget(form.duration) }}
+          </div>
+        </div>
+        <div class="w3-col s6 l3 m6 w3-margin-bottom" title="{%trans%}lotation{%endtrans%}">
+          {{ form_label(form.availability) }}
+          {{ form_widget(form.availability) }}
+        </div>
+      </div>
+
+      <div class="w3-row-padding w3-margin-top w3-border-bottom">
+        <div class="w3-col s6 l3 m6 w3-margin-bottom">
+          <label>{%trans%}category{%endtrans%}"</label>
+          <select class="w3-select w3-border" name="category">
+            {%for c in categories%}
+            <option value='{{c.id}}'>{{c.name}}</option>
+            {%endfor%}
+          </select>
+        </div>
+      </div>
+
+      <script>var l = []</script>
+      <div class="w3-row-padding w3-margin-top w3-border-bottom">
+        {%for locale in locales %}  
+        <script>
+         l.push({name:'{{locale.name}}', id:{{locale.id}}, file:'{{locale.getFilename}}'})  
+        </script>
+        <div class="w3-col s12 l6 m12 w3-margin-bottom">
+        <div class="w3-row">
+        <div class="w3-col s12 w3-border-bottom">
+          <img src="{{locale.getFilename}}" style="height:45px" class="w3-border" title="{{locale.name}}">
+          <label>{% trans %}description{% endtrans %}</label>
+        </div>
+        <div class="product_product_description_translation" data-locales='{{locale.id}}'>
+        </div>
+        <label>{% trans %}text{% endtrans %}</label>
+        <div class="summernote_pd" data-locales='{{locale.id}}'></div>
+      </div>
+      </div>
+      {% endfor %}
+      </div>
+      
+      <div class="w3-row-padding w3-margin-top w3-border-bottom">
+        <div class="w3-col s12" title="{%trans%}active{%endtrans%}">
+          <span class="w3-margin-right">{{ form_label(form.warranty_payment)}}</span> 
+          {{ form_widget(form.warranty_payment)}}
+        </div>
+        {%for locale in locales %}
+        <div class="w3-col s12 l6 m12 w3-margin-bottom">
+        <div class="w3-row">
+        <div class="w3-col s12" style="margin-bottom:-16px">
+          <img src="{{locale.getFilename}}" style="height:45px" class="w3-border" title="{{locale.name}}">
+          <label>{% trans %}text{% endtrans %}</label>
+        </div>
+        <div class="product_product_wp_translation" data-locales='{{locale.id}}'>
+        </div>
+        <label></label>
+        <div class="summernote_wp" data-locales='{{locale.id}}'></div>
+      </div>
+      </div>
+    
+      {% endfor %}
+      </div>
+
+      <div class="w3-row-padding w3-margin-top w3-border-bottom">    
+      {{ form_widget(form.submit)}}
+
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom w3-border-top">
+        <span class="w3-btn w3-border w3-green w3-right w3-margin-top" onclick="$('#product-form').trigger('submit')">
+            <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+</div>
+
+<script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+<script>
+
+
+  $('.summernote_pd, .summernote_wp').summernote({
+    placeholder: '{%trans%}text{%endtrans%} ....',
+    tabsize: 2,
+    height: 220,
+    fontName:'Arial'
+  })
+
+  function addItemForm($collectionHolder, $newLinkDiv, index) {
+    var prototype = $collectionHolder.data('prototype')
+    id = index != 0 ? 
+      $newLinkDiv.data('locales') : index
+    var newForm = prototype
+    newForm = newForm.replace(/__name__/g, id)
+    var $newFormDiv = $('<div></div>').html(newForm)
+    $newLinkDiv.html($newFormDiv)
+  }
+
+  //set locales to descriptions
+  $(".product_product_description_translation" ).each(function() {
+    var id = $(this).data('locales')
+    addItemForm($('#product_product_description_translation'), $(this), id)
+    $('#product_product_description_translation_'+id+'_locales').removeAttr('selected').val(id)
+  })
+
+  //set locales to wp
+  $(".product_product_wp_translation" ).each(function() {
+    var id = $(this).data('locales')
+    addItemForm($('#product_product_wp_translation'), $(this), id)
+    $('#product_product_wp_translation_'+id+'_locales').removeAttr('selected').val(id)
+  })
+
+  function addItemFormp($collectionHolder, $newLinkDiv, locale) {
+    var prototype = $collectionHolder.data('prototype')
+    $newLinkDiv.attr('data-locales', locale)
+    var newForm = prototype
+    newForm = newForm.replace(/_translation_/g, '_translation_'+locale+'_')
+
+    for (i = 0; i<6; i++){
+      newForm = newForm.replace('[translation][0][name]', '[translation]['+locale+'][name]')
+      newForm = newForm.replace('[translation][0][locales]', '[translation]['+locale+'][locales]')
+    }
+
+    var $newFormDiv = $('<div></div>').html(newForm)
+    
+    $newLinkDiv.append($newFormDiv)
+  }
+
+  var loadFile = function(event) {
+    $('.set-image-container').html('<img id="output" class="w3-image w3-animate-zoom">')
+    var output = document.getElementById('output')
+    output.src = URL.createObjectURL(event.target.files[0])
+  }
+
+
+$('#product_product_description_translation').parent().remove()
+
+$('#product_duration').datetimepicker({format: 'HH:mm', ignoreReadonly:true, icons: {
+  time: "fa fa-clock-o",
+  date: "fa fa-calendar",
+  up: "fa fa-chevron-up",
+  down: "fa fa-chevron-down"
+  }
+}).val('00:00')
+
+
+$('#product-form').on('submit',function(e){
+  obj=''
+  
+  $(".summernote_pd").each(function() {
+    $('#product_product_description_translation_'+$(this).data('locales')+'_html').val($(this).summernote('code'))
+  })
+  
+  $(".summernote_wp").each(function() {
+    $('#product_product_wp_translation_'+$(this).data('locales')+'_html').val($(this).summernote('code'))
+  })
+  console.log($('#product-form').serialize())
+
+  e.preventDefault()
+  $('.w3-overlay').show()
+  $('.required').addClass('w3-hide')
+    $.ajax({  
+      url:'{{ path('admin_product_add') }}',
+      type: "POST",
+      data: new FormData($(this)[0]),
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function(data){  
+        $('.w3-overlay').hide()
+        console.log(data)
+        if (data.status == 1){
+          ajaxUpload('product-list')
+        }
+        else{
+          for(i=0;i<data.data.length;i++)
+            obj += data.data[i]+'<br>'
+          $('#set-fields').html(obj)
+
+          $('#modal-fields').show()
+        }
+      },
+      error:function(data){
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+  //}, 500)
+})
+</script>
+

@@ -1,0 +1,613 @@
+
+<style type="text/css">
+  .w3-closebtn {
+    text-decoration: none;
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold}
+</style>
+
+<div id="modal-booking-set-status" class="w3-modal" style="z-index: 9999999; padding-top: 64px; padding-bottom: 32px">
+  <div style="z-index: 9;position: fixed;left: calc(50% - 24px);top:6px" class="w3-animate-top">
+    <img class="icon">
+  </div>
+  <div class="w3-modal-content w3-sand w3-animate-zoom setflag" style="min-width:95%;max-width: 650px">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-booking-set-status').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-ship"></i>
+        <span>{%trans%}booking{%endtrans%} #<span id="booking-id"></span></span>
+      </h2>
+    </div>
+    <div class="w3-row-padding w3-margin-top" id="set-booking"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#bookingstatus').trigger('submit')">
+          <i class="fa fa-envelope"></i> {%trans%}submit{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-booking-set-status').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-product" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-product').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="delete-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-product">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteProduct($('#delete-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-product').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-banner" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-banner').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="delete-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-banner">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteBanner($('#delete-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-banner').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-menu" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-menu').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="delete-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-menu">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteMenu($('#delete-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-mwnu').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-category" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-category').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="delete-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-category">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteCategory($('#delete-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-category').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-easytext" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-easytext').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="easytext-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-easytext">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteEasyText($('#easytext-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-easytext').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-rgpd" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-rgpd').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="rgpd-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-rgpd">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteRgpd($('#rgpd-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-rgpd').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-delete-terms" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-terms').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="terms-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-terms">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteTerms($('#terms-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-terms').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="modal-delete-user" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-user').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="user-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-user">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteUser($('#user-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-user').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-delete-gallery" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-delete-gallery').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}delete{%endtrans%} ?<input type="hidden" id="delete-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="delete-gallery"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="deleteGallery($('#delete-id').val())">
+          <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-delete-gallery').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-edit-stock" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:450px">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-edit-stock').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-edit fa-fw"></i>{%trans%}change{%endtrans%} {%trans%}available{%endtrans%} ? <br>
+      </h2>
+    </div>
+    <form id="set-stock">
+      <div class="w3-container w3-padding w3-sand">
+        <p class="w3-center" id="set-stock-info"></p>
+        <input type="hidden" id="set-stock-id" name="id">
+        <div class="w3-row-padding">
+          <div class="w3-col s12 m6">
+            <label>Total</label>
+            <input type="number" name="lotation" class="w3-input w3-white w3-border" id="set-stock-lotation">
+          </div>
+          <div class="w3-col s12 m6">
+            <label>{%trans%}available{%endtrans%}</label>
+            <input type="number" name="stock" class="w3-input w3-white w3-border" id="set-stock-available">
+          </div>
+        </div>
+      </div>
+      <div class="w3-row-padding w3-border-top">
+        <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+          <span class="w3-btn-block w3-right w3-button w3-border w3-green" onclick="editAvailable()">
+            <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+          </span>
+          <span class="w3-btn-block w3-margin-left w3-button w3-border w3-red" onclick="deleteAvailable()">
+            <i class="fas fa-trash-alt"></i> {%trans%}delete{%endtrans%}
+          </span>
+          <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-stock').hide()">
+            <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="modal-edit-product" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="min-width:95%">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-edit-product').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-edit fa-fw"></i>
+        <span id="set-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="set-product"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#product-form').trigger('submit')">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-product').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="modal-edit-banner" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="min-width:95%">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-edit-banner').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-edit fa-fw"></i>
+        <span id="set-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="set-banner"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#banner-form').trigger('submit')">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-banner').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-edit-menu" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="min-width:95%">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-edit-menu').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-edit fa-fw"></i>
+        <span id="set-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="set-menu"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#menu-form').trigger('submit')">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-menu').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-edit-category" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="min-width:95%">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-edit-category').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-edit fa-fw"></i>
+        <span id="set-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="set-category"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#category-form').trigger('submit')">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-category').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="modal-new-available" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="min-width:95%">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-new-available').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-edit fa-fw"></i>
+        <span id="set-id-available"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="set-available"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#available-form').trigger('submit')">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-new-available').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-edit-gallery" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="min-width:95%">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-edit-gallery').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="far fa-edit fa-fw"></i>
+        <span>{%trans%}showcase{%endtrans%} <span id="set-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="set-gallery"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#gallery-form').trigger('submit')">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-gallery').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-edit-password" class="w3-modal" style="z-index:9999999;padding-top: 12px;padding-bottom:32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-edit-password').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-unlock-alt"></i>
+        <span>Password</span>
+      </h2>
+    </div>
+    <input type="hidden" id="set-user-id">
+    <div class="w3-container w3-padding w3-sand" id="set-password"></div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-margin-left w3-right w3-button w3-border w3-green" onclick="$('#change-password').trigger('submit')">
+          <i class="fa fa-check"></i> {%trans%}save{%endtrans%}
+        </span>
+        <span class="w3-btn-block w3-button w3-left w3-border w3-white" onclick="$('#modal-edit-password').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-error" class="w3-modal" style="z-index: 9999999;padding-top:100px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-red w3-padding">
+      <span onclick="$('#modal-error').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fa fa-exclamation-triangle"></i>
+        <span class="ERROR">{% trans %}error{% endtrans %} </span>
+      </h2>
+    </div>
+    <div class="w3-container w3-text-black w3-large w3-padding WIFIERROR">{% trans %}wifi_error{% endtrans %}
+    </div>
+  </div>
+</div>
+
+<div id="modal-fields" class="w3-modal" style="z-index: 9999999;padding-top:60px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-col s12">
+      <div class="w3-row">
+        <div class="w3-panel w3-leftbar w3-col s12 w3-pale-yellow w3-border-amber w3-left-align w3-large">
+          <span class="w3-closebtn w3-padding-small" onclick="$('#modal-fields').hide()">
+            <i class="fa fa-times"></i>
+          </span>
+          <h2>
+            <i class="fa fa-warning"></i>
+            <span>{% trans %}attention{% endtrans %}</span>
+          </h2>
+          <div class="w3-padding-small" id="set-fields"></div>
+          <div class="w3-hide required">{% trans %}name{% endtrans %}</div>
+          <div class="w3-hide required">Email</div>
+          <div class="w3-hide required">{%trans%}status{%endtrans%}</div>
+          <div class="w3-hide required">{%trans%}notes{%endtrans%}</div>
+          <div class="NAME_PT w3-hide required">Nome PT *</div>
+          <div class="NAME_EN w3-hide required">Nome EN *</div>
+          <div class="DESCRIPTION_PT w3-hide required">Descrição PT *</div>
+          <div class="DESCRIPTION_EN w3-hide required">Descrição EN *</div>
+          <div class="ADULT_PRICE w3-hide required">Preço Adulto *</div>
+          <div class="w3-margin-bottom"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-confirm" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-amber w3-padding">
+      <span onclick="$('#modal-confirm').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{%trans%}check{%endtrans%} !<input type="hidden" id="confirm-id"></span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding" id="confirm">
+    </div>
+    <div class="w3-row w3-padding-large w3-border-top">
+      <div class="w3-col s6">
+        <span class="w3-btn w3-border" onclick="$('#modal-confirm').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+      <div id="action-confirm" class="w3-col s6">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-success" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-blue w3-padding">
+      <span onclick="$('#modal-success').hide()" class="w3-padding w3-button w3-display-topright">
+        <i class="w3-xlarge fa fa-times"></i>
+      </span>
+      <h2>
+        <i class="fas fa-info-circle"></i>
+        <span>{%trans%}info{%endtrans%}</span>
+      </h2>
+    </div>
+    <div class="w3-container w3-padding success-message">
+    </div>
+    <div class="w3-row-padding w3-xlarge w3-padding-large w3-border-top">
+      <div class="w3-col s6">
+        <span class="w3-block w3-btn w3-border" style="padding: 0 8px" onclick="$('#modal-success').hide()">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="info-client" class="w3-modal" style="z-index: 9999999;padding-top: 12px; padding-bottom: 32px">
+  <div class="w3-modal-content w3-animate-zoom" style="max-width:400px">
+    <div class="w3-container w3-padding" id="info-client-head">
+    </div>
+    <div class="w3-container w3-padding" id="client-txt">
+    </div>
+    <div class="w3-row-padding w3-border-top">
+      <div class="w3-col s12 w3-margin-top w3-margin-bottom">
+        <span class="w3-btn-block w3-button w3-right w3-border w3-white" onclick="$('#info-client').hide()">
+          <i class="fa fa-times"></i> {%trans%}close{%endtrans%}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

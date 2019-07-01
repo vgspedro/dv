@@ -1,0 +1,121 @@
+<script>
+
+$(function(){
+   // ajaxUpload('dashboard')
+})
+
+function ajaxUpload(block){
+    block == 'product-new' || block == 'product-list' ? false : $('#product').removeClass('w3-show')
+
+    switch (block){
+        case 'dashboard': 
+            url = '{{ path("admin_dashboard") }}' 
+        break
+        case 'product-new': 
+            url = '{{ path("admin_product_new") }}' 
+        break
+        case 'product-list': 
+            url = '{{ path("admin_product_list") }}' 
+        break
+        case 'gallery-new': 
+            url = '{{ path("admin_gallery_new") }}' 
+        break
+        case 'gallery-list': 
+            url = '{{ path("admin_gallery_list") }}' 
+        break
+        case 'booking': 
+            url = '{{ path("admin_booking") }}' 
+        break
+        case 'available': 
+            url = '{{ path("admin_available") }}' 
+        break
+        case 'easy-text': 
+            url = '{{ path("admin_easy_text") }}' 
+        break
+        case 'available-new': 
+            url = '{{ path("admin_available_new") }}' 
+        break
+        case 'user-list': 
+            url = '{{ path("user_list") }}' 
+        break
+        case 'user-new': 
+            url = '{{ path("user_new") }}' 
+        break
+        case 'warning': 
+            url = '{{ path("admin_warning") }}' 
+        break
+        case 'gallery': 
+            url = '{{ path("admin_gallery") }}' 
+        break
+        case 'rgpd': 
+            url = '{{ path("admin_rgpd") }}' 
+        break
+        case 'terms': 
+            url = '{{ path("admin_terms") }}' 
+        break
+        case 'company': 
+            url = '{{ path("admin_company_show_edit") }}' 
+        break
+        case 'about-us': 
+            url = '{{ path("admin_about_us") }}' 
+        break
+        case 'banner-new': 
+            url = '{{ path("admin_banner_new") }}' 
+        break
+        case 'banner-list': 
+            url = '{{ path("admin_banner_list") }}' 
+        break
+        case 'category-new': 
+            url = '{{ path("admin_category_new") }}' 
+        break
+        case 'category-list': 
+            url = '{{ path("admin_category_list") }}' 
+        break
+        case 'menu-new': 
+            url = '{{ path("admin_menu_new") }}' 
+        break
+        case 'menu-list': 
+            url = '{{ path("admin_menu_list") }}' 
+        break
+    }
+
+    $('.w3-overlay').show() 
+    setTimeout(function(){
+        $.ajax({
+            url:url,
+            type: "POST",
+            async: true,
+            cache:false,
+            success: function (data){
+                $('.nav').removeClass('w3-blue')
+                $('#'+block).addClass('w3-blue')    
+                $('#add').html(data)
+                $('.w3-overlay').hide()
+                $('.w3-sidebar').addClass('w3-hide')
+            },
+            error: function (data){
+                $('.w3-overlay').hide() 
+                $('#modal-error').show()
+            }
+        })
+    }, 500)        
+}
+
+function dropDownMenu(menu) {
+    var x = document.getElementById(menu)
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show"
+    } else { 
+        x.className = x.className.replace(" w3-show", "")
+    }
+}
+
+
+function w3_open() {
+    $('.w3-sidebar').hasClass('w3-hide') ? 
+        $('.w3-sidebar').removeClass('w3-hide') :
+        $('.w3-sidebar').addClass('w3-hide')
+}
+
+
+</script>

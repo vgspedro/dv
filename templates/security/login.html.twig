@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <script src="{{ asset('js/jquery-2.1.1.min.js')}}"></script>
+        {% include 'page/styles.html' %}
+    </head>
+
+    <style>
+    .bgimg-1{
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;}
+    .bgimg-1 {min-height: 100vh;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.4)), url("{{asset ('images/login.jpeg')}}");
+        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.4)), url("{{asset ('images/login.jpeg')}}");
+        background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.4)), url("{{asset ('images/login.jpeg')}}");
+        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.4)), url("{{asset ('images/login.jpeg')}}");
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(255, 255, 255, 0.4))), url("{{asset ('images/login.jpeg')}}");
+        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.4)), url("{{asset ('images/login.jpeg')}}");
+    }
+    
+    </style>
+    <body class="bgimg-1">
+       <div class="w3-overlay w3-animate-opacity" onclick="this.hide()" style="cursor:pointer" id="myOverlay">
+            <div class="w3-display-container" style="height:100vh">
+                <div class="w3-display-middle">
+                    <i class="w3-text-white fa fa-4x fa-spinner fa-pulse"></i>
+                </div>
+            </div>
+        </div> 
+        {% block content %}{% endblock %}
+        <script>
+        $('button[type=submit]').click(function() {
+            $('.w3-overlay').show()
+        })
+        </script>
+    </body>
+</html>

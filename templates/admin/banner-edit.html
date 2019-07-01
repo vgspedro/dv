@@ -1,0 +1,151 @@
+<style>
+ li { list-style-type:none}
+ ul{padding: 0px}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {border: 3px solid transparent!important} 
+ .w3-input {border-bottom: 0px solid #05788d}
+</style>
+<header class="w3-container" style="padding-top:22px">
+    <h5>
+      <b>
+        <i class="fas fa-image"></i> Banner <i class="far fa-edit fa-fw"></i>
+    </b>
+  </h5>
+</header>
+
+<div class="">
+  {{ form_start(form, {'attr': {'id': 'banner-form'}})  }}
+  
+    <div class="w3-padding-16 w3-row-padding w3-border w3-sand">
+
+      <input type="hidden" value="{{banner.id}}" name="id">
+
+      <div class="w3-col s0 l3 m2 w3-hide-small">&nbsp;</div>
+
+      <div class="w3-col s12 l6 m8 w3-center" title="{%trans%}add_image{%endtrans%}">
+      <div class="w3-center w3-margin-bottom w3-border w3-imput w3-section set-image-container w3-padding" style="cursor:pointer"onclick="$('.set-image').trigger('click')">
+
+        {% if banner.image %}
+        {% set url=banner.image|split('/public_html/') %}
+          <img id="output" src="../{{ url[1] }}" class="w3-image w3-animate-zoom">
+        {% else %}
+        <i class="fa fa-camera w3-jumbo" style="color:#05788d"></i>
+        {% endif %}
+      </div>
+      {{ form_widget(form.image)}}
+    </div>
+  </div>
+
+  <div class="w3-row-padding w3-border w3-sand w3-padding-16">
+
+    <div class="w3-col s12 l2 m4">
+      <label>{%trans%}order{%endtrans%}</label>
+      <select class="w3-select w3-border" name="order_by">
+        {% for i in 1..totals %}
+          {% if (i == banner.orderBy) %}
+            <option selected value="{{i}}">{{ i }}</option>
+          {% else %}
+            <option value="{{i}}">{{ i }}</option>
+        {% endif %}
+          {% endfor %}
+      </select>
+    </div>
+
+    <div class="w3-col s12 l2 m4" title="{%trans%}image_visible{%endtrans%}">
+      <label>&nbsp;</label><br>
+      {{ form_widget(form.is_active)}} {{ form_label(form.is_active)}}
+    </div>
+
+    <div class="w3-col s12 l2 m4" title="{%trans%}text_visible{%endtrans%}">
+      <label>&nbsp;</label><br>
+      {{ form_widget(form.text_active)}} {{ form_label(form.text_active)}}
+    </div>
+  </div>
+
+  <div class="w3-row-padding w3-border w3-sand w3-padding-16">
+
+   {% for locale in locales%}
+
+    <div class="w3-col s12 l4 m6">
+
+      <label>{% trans %}text{% endtrans %} {% set k = locale.name|split('_') %} {{ k[1] }}</label>
+      <div class="w3-row">
+        <div class="w3-col" style="width:45px">
+          <img src="{{locale.filename}}" style="height:45px" class="w3-border" title="{{locale.name}}">
+        </div>
+        <div class="w3-rest">
+
+        {% for translated in banner.Translation %}
+          {% if locale.id == translated.locales.id %}
+
+          <input type="text" data-translated-id="{{translated.id}}" data-locale-id="{{locale.id}}" name="locale" class="w3-input w3-border w3-white" value="{{translated.name}}" placeholder="{{locale.name}}">
+        
+          {% endif %}
+        {% endfor %}
+        
+        <input type="hidden" name="translated">
+
+        </div>
+      </div>
+    </div>
+
+        {% endfor %}
+
+      <div class="w3-hide">
+        {{ form_widget(form.submit)}}
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+
+<script>
+
+  var loadFile = function(event) {
+    $('.set-image-container').html('<img id="output" class="w3-image w3-animate-zoom">')
+    var output = document.getElementById('output')
+    output.src = URL.createObjectURL(event.target.files[0])
+  }
+
+$('#banner-form').on('submit',function(e){
+  e.preventDefault()
+  obj=''
+  $('.w3-overlay').show()
+
+  arr = []
+
+  $('input[name=locale]').each(function( index ) {
+    arr.push({id:$(this).attr('data-translated-id'), name:$(this).val(), locale_id:$(this).attr('data-locale-id')})
+  })
+
+  $('input[name=translated]').val(JSON.stringify(arr))
+
+  $('.required').addClass('w3-hide')
+    $.ajax({
+      url:'{{ path('admin_banner_edit') }}',
+      type: "POST",
+      data: new FormData($(this)[0]),
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function(data){  
+        //console.log(data)
+        $('.w3-overlay').hide()
+        if (data.status == 1){
+          ajaxUpload('banner-list')
+          $('#modal-edit-banner').hide()
+          $('#banner-form').trigger('reset')
+        }
+        else {
+          for(i=0; i<data.data.length;i++)
+            obj += data.data[i]+'<br>'
+          $('#set-fields').html(obj)
+          $('#modal-fields').show()
+        }
+      },
+      error:function(data){
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+})
+</script>
+

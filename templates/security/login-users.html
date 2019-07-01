@@ -1,0 +1,43 @@
+{% extends "security/login.html.twig" %}
+
+{% block content %}
+<style>
+::-webkit-input-placeholder {opacity: 0.3}
+::-moz-placeholder {opacity: 0.3}
+:-ms-input-placeholder{opacity: 0.3}
+:-moz-placeholder {opacity: 0.3}
+</style>
+
+  <div class="w3-col l6 m8 s11 w3-card w3-display-middle w3-border w3-opacity-min">
+    <div class="w3-white">
+      <form action="{{ path('login') }}" method="post">
+        <div class="w3-padding-8 w3-blue w3-padding-small w3-xlarge w3-border-bottom"><i class="fa fa-unlock"></i> {%trans%}acess{%endtrans%}</div>
+        <div class="w3-content w3-padding-16 w3-row-padding w3-large">
+          <div class="w3-col m6 s12 w3-left-align w3-large">
+            <label for="username">{%trans%}name{%endtrans%} *</label>
+            <input type="text" id="username" placeholder="{%trans%}name{%endtrans%} *" class="w3-input w3-border" autofocus value="{{ last_username }}" name="username"/>
+          </div>
+          <div class="w3-col m6 s12 w3-left-align w3-large">
+            <label for="password">Password *</label>
+            <input type="password" id="password" class="w3-input w3-border" placeholder="Password *" name="_password" />
+          </div>
+          {% if error %}
+          <div class="w3-col s12">
+            <div class="w3-center w3-animate-left w3-text-red">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+          </div>
+          {% endif %}
+          <div class="w3-col s6 w3-margin-top">
+            <button type="reset" class="w3-left w3-btn-block w3-button w3-border w3-white"><i class="fa fa-eraser"></i> {%trans%}clear{%endtrans%}</button>
+          </div>
+          <div class="w3-col s6 w3-margin-top">
+            <button type="submit" class="w3-right w3-btn-block w3-button w3-border w3-green"><i class="fa fa-check"></i> {%trans%}submit{%endtrans%}</button>
+          </div>
+        </div>
+        <input type="hidden" name="_target_path" value="/admin/" />
+        <input type="hidden" name="_csrf_token" value="{{csrf_token('authenticate') }}">
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+

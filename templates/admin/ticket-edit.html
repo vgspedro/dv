@@ -1,0 +1,64 @@
+
+<link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+<style>
+ li { list-style-type:none}
+ ul{padding: 0px}
+ .timepicker{background:#FFF;border:1px solid #DDD;padding: 8px 0px}
+.bootstrap-datetimepicker-widget table td span {border-radius: 0px}
+.bootstrap-datetimepicker-widget table td span:hover {background: #DDD}
+#product_event_0_event{display:none}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {border: 3px solid transparent!important} 
+ .w3-input {border-bottom: 0px solid #05788d}
+ .w3-select{padding: 11.5px 4px}
+</style>
+<div class="">
+  {{ form_start(form, {'attr': {'id': 'form'}})  }}
+    
+      {{ form_end(form) }}
+  </div>
+
+  {{dump(tickets)}}
+  
+<script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+
+<script>
+
+$('#form').on('submit',function(e){
+  e.preventDefault()
+  form = new FormData($(this)[0])
+  obj=''
+  $('.w3-overlay').show()
+  $('.required').addClass('w3-hide')
+  setTimeout(function(){
+    $.ajax({
+      url:'{{ path('admin_product_edit') }}',
+      type: "POST",
+      data: form,
+      processData: false,
+      contentType: false,
+      cache: false,
+      success: function(data){  
+        $('.w3-overlay').hide()
+        if (data.message == 'success'){
+          ajaxUpload('product-list')
+          $('#modal-edit-product').hide()
+          $('#product-form').trigger('reset')
+        }
+        else if (data.message=='fail'){
+          for(i=0;i<data.data.length;i++)
+            obj += data.data[i]+'<br>'
+          $('#set-fields').html(obj)
+          $('#modal-fields').show()
+        }
+      },
+      error:function(data){
+        $('.w3-overlay').hide()
+        $('#modal-error').show()
+      }
+    })
+  }, 500)
+})
+
+</script>
+

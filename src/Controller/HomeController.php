@@ -23,7 +23,7 @@ class HomeController extends AbstractController
         return $this->render('base.html.twig', array(
             'services' => $this->services(),
             'skills' => $this->skills(),
-            'latestWorks' => $this->latestWorks(),
+            //'latestWorks' => $this->latestWorks(),
             'menus' => $this->menu()
         ));
     }
@@ -47,17 +47,17 @@ class HomeController extends AbstractController
             return new JsonResponse(array('message' => $err, 'status' => 0));
         }
         
-        $transport = (new \Swift_SmtpTransport('mail.darioviegas.com', 465, 'ssl'))
-            ->setUsername('info@darioviegas.com')
+        $transport = (new \Swift_SmtpTransport('mail.masivi.com', 465, 'ssl'))
+            ->setUsername('info@masivi.com')
             ->setPassword($_ENV['MAIL_PASS']);
 
             $mailer = new \Swift_Mailer($transport);
 
             $message = (new \Swift_Message('Contato'))
             
-                ->setFrom(['info@darioviegas.com' => 'darioviegas'])
+                ->setFrom(['info@masivi.com' => 'masivi'])
                 ->setTo([$email => $name])
-                ->setBcc(['info@darioviegas.com' => 'darioviegas'])
+                ->setBcc(['info@masivi.com' => 'masivi'])
                 ->setBody(
                 $this->renderView('emails/contact.html.twig', array(
                     'name' => $name,
@@ -66,9 +66,9 @@ class HomeController extends AbstractController
                         ),
                     'text/html'
                 )
-                ->addPart('Olá '.$name.', em breve entraremos em contato. Mensagem: '.$msn.' Obrigado, DV.', 'text/plain');
+                ->addPart('Olá '.$name.', em breve entraremos em contato. Mensagem: '.$msn.' Obrigado, MSV.', 'text/plain');
             
-            $message->getHeaders()->addTextHeader('List-Unsubscribe', 'https://darioviegas.com'); 
+            $message->getHeaders()->addTextHeader('List-Unsubscribe', 'https://masivi.com'); 
             
             $mailer->send($message);
                 
@@ -109,9 +109,10 @@ class HomeController extends AbstractController
     }
 
     private function menu(){
-        $menu[] = array('name'=>'LATEST<br>WORKS', 'tag'=>'latest-works', 'class'=>'LATEST_WORKS');
-        $menu[] = array('name'=>'SERVICES', 'tag'=>'services', 'class'=>'SERVICES');
+       // $menu[] = array('name'=>'LATEST<br>WORKS', 'tag'=>'latest-works', 'class'=>'LATEST_WORKS');
+        
         $menu[] = array('name'=>'SKILLS', 'tag'=>'skills', 'class'=>'SKILLS');
+        $menu[] = array('name'=>'SERVICES', 'tag'=>'services', 'class'=>'SERVICES');
         $menu[] = array('name'=>'CONTACT<br>US', 'tag'=>'contacts','class'=>'CONTACT_US');        
         return $menu;
     }

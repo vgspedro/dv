@@ -20,6 +20,16 @@ class HomeController extends AbstractController
 
     public function index(Request $request)
     {
+
+        $company['firstName'] = 'Masivi';
+        $company['name'] = 'Masivi';
+        $company['email'] = 'info@masivi.com';
+        $company['phone'] = '+351 960 000 000';
+
+        if($_ENV['MAINTENANCE'])
+            return $this->render('maintenance.html', [
+            'company' => $company]);
+
         return $this->render('base.html.twig', array(
             'services' => $this->services(),
             'skills' => $this->skills(),

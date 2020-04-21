@@ -47,6 +47,7 @@ class HomeController extends AbstractController
         $request->request->get('name') ? $name = ucwords($request->request->get('name')) : $err[] = 'NAME';
         $request->request->get('email') ? $email = strtolower($request->request->get('email')) : $err[] = 'EMAIL';
         $request->request->get('msn') ? $msn = $request->request->get('msn') : $err[] = 'MSN';
+        $request->request->get('privacy') ? false : $err[] = 'PRIVACY_TXT';
         $request->request->get('locale');
 
         if($err)
@@ -92,16 +93,17 @@ class HomeController extends AbstractController
         $skills[] = array('id' => 3, 'border'=>'#ff58a0', 'img'=>'images/id.jpg', 'name'=>'ADOBE<br>INDESIGN', 'alt'=>'adobe indesign','percentage'=>70);
         $skills[] = array('id' => 4, 'border'=>'#d473f8', 'img'=>'images/pr.jpg', 'name'=>'ADOBE<br>PREMIERE', 'alt'=>'adobre premiere','percentage'=>60);
         $skills[] = array('id' => 5, 'border'=>'#101152', 'img'=>'images/c4d.png', 'name'=>'CINEMA<br>4D', 'alt'=>'cinema 4d blender solid works','percentage'=>80);
-        $skills[] = array('id' => 6, 'border'=>'#84cd62', 'img'=>'images/paint.png', 'name'=>'MICROSOFT<br>PAINT', 'alt'=>'microsoft paint','percentage'=>5);
+        $skills[] = array('id' => 6, 'border'=>'#84cd62', 'img'=>'images/paint.png', 'name'=>'MICROSOFT<br>PAINT', 'alt'=>'microsoft paint','percentage'=>12);
         $skills[] = array('id' => 7, 'border'=>'#2f0300', 'img'=>'images/joomla.png', 'name'=>'JOOMLA<br>&nbsp;', 'alt'=>'joomla','percentage'=>85);
-        $skills[] = array('id' => 8, 'border'=>'#40871d', 'img'=>'images/android.png', 'name'=>'ANDROID<br>&nbsp;', 'alt'=>'android samsung huawei','percentage'=>80);            $skills[] = array('border'=>'#E9E9E9', 'img'=>'images/jquery.png', 'name'=>'JQUERY<br>&nbsp;', 'alt'=>'jquery','percentage'=>75);
-        $skills[] = array('id' => 9, 'border'=>'#6E5400', 'img'=>'images/js.png', 'name'=>'JAVASCRIPT<br>&nbsp;', 'alt'=>'javascript','percentage'=>95);
-        $skills[] = array('id' => 10, 'border'=>'#791900', 'img'=>'images/html5.png', 'name'=>'HTML5<br>&nbsp;', 'alt'=>'html5','percentage'=>95);
+        $skills[] = array('id' => 8, 'border'=>'#40871d', 'img'=>'images/android.png', 'name'=>'ANDROID<br>&nbsp;', 'alt'=>'android samsung huawei','percentage'=>80);
+        $skills[] = array('border'=>'#E9E9E9', 'img'=>'images/jquery.png', 'name'=>'JQUERY<br>&nbsp;', 'alt'=>'jquery','percentage' => 80);
+        $skills[] = array('id' => 9, 'border'=>'#6E5400', 'img'=>'images/js.png', 'name'=>'JAVASCRIPT<br>&nbsp;', 'alt'=>'javascript','percentage' => 80);
+        $skills[] = array('id' => 10, 'border'=>'#791900', 'img'=>'images/html5.png', 'name'=>'HTML5<br>&nbsp;', 'alt'=>'html5','percentage' => 90);
         $skills[] = array('id' => 11, 'border'=>'#014574', 'img'=>'images/html3.png', 'name'=>'CSS3<br>&nbsp;', 'alt'=>'css3 ','percentage'=>90);
-        $skills[] = array('id' => 12, 'border'=>'#FFE4B7', 'img'=>'images/mysql.png', 'name'=>'MYSQL<br>&nbsp;', 'alt'=>'mysql, pdo, orm, doctrine, mysqli','percentage'=>65);
+        $skills[] = array('id' => 12, 'border'=>'#FFE4B7', 'img'=>'images/mysql.png', 'name'=>'MYSQL<br>&nbsp;', 'alt'=>'mysql, pdo, orm, doctrine, mysqli','percentage' => 70);
         $skills[] = array('id' => 13, 'border'=>'#000000', 'img'=>'images/sf.png', 'name'=>'SYMFONY<br>&nbsp;', 'alt'=>'symfony','percentage'=>75);
-        $skills[] = array('id' => 14, 'border'=>'#EAFFB4', 'img'=>'images/twig.jpg', 'name'=>'TWIG<br>&nbsp;', 'alt'=>'twig','percentage'=>70);
-        $skills[] = array('id' => 15, 'border'=>'#222430', 'img'=>'images/php.jpg', 'name'=>'PHP<br>&nbsp;', 'alt'=>'php','percentage'=>87);
+        $skills[] = array('id' => 14, 'border'=>'#EAFFB4', 'img'=>'images/twig.jpg', 'name'=>'TWIG<br>&nbsp;', 'alt'=>'twig','percentage'=>75);
+        $skills[] = array('id' => 15, 'border'=>'#222430', 'img'=>'images/php.jpg', 'name'=>'PHP<br>&nbsp;', 'alt'=>'php','percentage'=>85);
         return $skills;
     } 
 

@@ -2,6 +2,17 @@
 <style>
 .hexagon-560 {background-image: url('{{ asset('images/hexagon-500.jpg')}}')}
 .bgimg-5 {background-image: url('{{ asset('images/bg_5.jpg') }}');background-attachment: inherit!important;background-size: contain!important}
+.privacy{font-size:11.6px; color:#67fdd0}
+
+input[type="text"], textarea {background-color :transparent; color: #67FDD0}
+
+@media (max-width: 650px){
+.privacy, input[type="text"], textarea, .message{
+color:#000!important;
+text-align: left!important;
+}
+}
+
 </style>
 
 <section class="w3-container w3-padding-16 contacts bgimg-5">
@@ -17,19 +28,27 @@
             <form id="submit-info" class="form-submit">
               <div class="w3-col s12" style="margin-top: -36px">
                 <input type="hidden" name="locale" id="locale" value="en">
-                <input type="text" class="NAME font-30 w3-input w3-transparent w3-border-aqua-green w3-text-aqua-green w3-center w3-margin-bottom" name="name" placeholder="NAME">
+                <input type="text" class="NAME font-30 w3-input w3-border-aqua-green w3-text-aqua-green w3-center w3-margin-bottom" name="name" placeholder="NAME">
               </div>
                 
               <div class="w3-col s12">
-                <input type="text" class="EMAIL font-30 w3-input w3-transparent w3-border-aqua-green w3-text-aqua-green w3-center w3-margin-bottom" name="email" placeholder="EMAIL">
+                <input type="text" class="EMAIL font-30 w3-input w3-border-aqua-green w3-text-aqua-green w3-center w3-margin-bottom" name="email" placeholder="EMAIL">
               </div>
               
               <div class="w3-col s12 w3-center">
-                <label class="w3-text-aqua-green font-30 MSN"><b>MESSAGE</b></label>
-                <textarea name="msn" class="w3-input w3-transparent w3-border-aqua-green w3-text-aqua-green" style="height:112px;resize:none;"></textarea>
+                <label class="message w3-text-aqua-green w3-block font-30 MSN"><b>MESSAGE</b></label>
+                <textarea name="msn" class="w3-input w3-border-aqua-green" style="height:88px;resize:none; font-size:20px"></textarea>
               </div>
               
-              <div class="w3-col s12 w3-padding-16 w3-center">
+              <div class="w3-col s12 w3-margin-top">
+                <input type="checkbox" class="w3-check" name="privacy" value='1'>
+                <label class="PRIVACY_AGREE_TXT privacy">I agree with Privacy Policy and Terms & Conditions</label>
+                <span style="overflow:inherit;float:right;margin-top:8px" class="w3-btn hexagon-40-bw w3-hover-white w3-text-white" onclick="$('#modal-terms').show()">
+                  <div class="hex-btn-txt SEE" style="left:7px">See</div>
+                </span>
+              </div>
+
+              <div class="w3-col s12 w3-padding-16 w3-center" style="margin-top:-12px"> 
                 <button class="submit-btn w3-btn w3-hover-aqua hexagon-100">
                   <div class="hex-btn-txt w3-xlarge" style="top: 10px;left: 0px;width:100%">
                     <b class="SEND w3-center">SEND</b>
@@ -42,3 +61,4 @@
     </div>
   </div>
 </section>
+

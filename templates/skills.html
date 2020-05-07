@@ -15,8 +15,8 @@
 @media screen and (max-width: 650px){
 .percent{margin-top:-10px}
 }
+.per{position:absolute;font-size:24px; top:4px;right:-20px}
 
-.per{position:absolute;font-size:24px;margin-top: 10px}
 </style>
 
 <section class="bgimg-4 w3-container w3-padding-16 w3-white skills">
@@ -31,7 +31,7 @@
       <div class="w3-padding-8 set-margin">
         <div class="hexagon-110-{{loop.index}}">
           <!--img style="width:64px" class="w3-hide" src="{{ skill.img}}" alt="{{ skill.alt}}"-->
-          <p class="percent">{{ skill.percentage}} <sup class="per">%</sup></p>
+          <p class="percent">{{ skill.percentage}} <b class="per">%</b></p>
         </div>
         <svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="175" height="175" xmlns="http://www.w3.org/2000/svg">
           <circle class="circle-chart__background" stroke="#d3d3d3" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />

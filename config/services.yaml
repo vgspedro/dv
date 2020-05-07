@@ -3,11 +3,6 @@
 parameters:
     locale: 'pt_PT'
 
-
-    gallery_images_directory: '%kernel.project_dir%/public_html/upload/gallery'
-    gallery_images_width: '640'
-    gallery_images_height: '480'
-
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -32,32 +27,6 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
-
-
-    file_uploader.gallery:
-        class: App\Service\FileUploader
-        arguments:
-            $targetDir: '%gallery_images_directory%'
-
-
-    image_resizer.gallery:
-        class: App\Service\ImageResizer
-        arguments:
-            $path: '%gallery_images_directory%'
-            $width: '%gallery_images_width%'
-            $height: '%gallery_images_height%'
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-
-
-    App\Controller\CompanyController:
-        bind:
-            App\Service\FileUploader: '@file_uploader.gallery'
-            App\Service\ImageResizer: '@image_resizer.gallery'
-        arguments:
-            - '%gallery_images_directory%'
-
 
 security:
     encoders:

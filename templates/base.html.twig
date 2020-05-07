@@ -32,9 +32,7 @@
                 })
             })
         </script>
-
     </head>
-
     <body>
     	<div class="w3-overlay" style="z-index: 999999" onclick="$(this).hide()">
             <div class="w3-display-middle w3-center">
@@ -42,19 +40,12 @@
             </div>
         </div>
     	{%include 'banner.html' %}
-
-    	{# %include 'latest_works.html' % #}
-
-        {# %include 'skills.html' % #}
-
-    	{%include 'services.html' %}
-
-    	{%include 'contacts.html' %}
-
-    	{%include 'footer.html' %}
-    
-        {%include 'modals.html' %}
-    
-    	{%include 'js.html' %}
+        {# %include 'latest_works.html' % #}
+        {% include 'skills.html' %}
+        {% include 'services.html' %}
+        {% include 'contacts.html' %}
+        {% include 'footer.html' %}
+        {% include 'modals.html' %}
+        {% include 'js.html' %}
     </body>
 </html>

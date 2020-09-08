@@ -15,7 +15,7 @@ class SendGridEmailSender
         $email->addContent(
             "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
         );
-        $sendgrid = new \SendGrid('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');
+        $sendgrid = new \SendGrid('');
         try {
             $response = $sendgrid->send($email);
             print $response->statusCode() . "\n";

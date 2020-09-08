@@ -14,23 +14,17 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 /*https://github.com/nojacko/email-validator*/
 use EmailValidator\EmailValidator;
 
-use App\Service\SendGridEmailSender;
-
 class HomeController extends AbstractController
 {
 
 
-    public function index(Request $request, SendGridEmailSender $sgrid)
+    public function index(Request $request)
     {
 
         $company['firstName'] = 'Masivi';
         $company['name'] = 'Masivi';
         $company['email'] = 'info@masivi.com';
         $company['phone'] = '+351 960 000 000';
-
-
-        $sgrid->sendTest();
-
 
         if($_ENV['MAINTENANCE'])
             return $this->render('maintenance.html', [

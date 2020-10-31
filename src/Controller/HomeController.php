@@ -58,6 +58,11 @@ class HomeController extends AbstractController
             return new JsonResponse(array('message' => $err, 'status' => 0));
         }
         
+        if (strlen($request->request->get('msn')) < 20){
+            $err[] = 'MSN_MIN_20_CHARS';
+            return new JsonResponse(array('message' => $err, 'status' => 0));
+        }
+        
         $transport = (new \Swift_SmtpTransport('mail.masivi.com', 465, 'ssl'))
             ->setUsername('info@masivi.com')
             ->setPassword($_ENV['MAIL_PASS']);

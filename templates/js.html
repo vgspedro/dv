@@ -28,9 +28,8 @@ $("#submit-info").on('submit',function(e){
             $('#modal-success').show();
           }
           else if(data.status == 0){
-              for(i=0;i<data.message.length;i++)
+            for(i=0;i<data.message.length;i++)
               $('.'+data.message[i]).removeClass('w3-hide');
-
               $('#modal-fields').show();
             }
         },
@@ -110,7 +109,9 @@ function userLocale(locale, mobile){
         $('.PHOTOGRAPHY').html(data.services.photography);
         $('.ILLUSTRATION').html(data.services.illustration);
         $('.STATIONARY').html(data.services.stationary);
-        
+        $('.MSN_MIN_20_CHARS').text(data.msn_20_chars);
+        $('.MIN_20').text(data.min_20);
+
         $('.cc-allow').text();
         $(".cc-dismiss").text(data.cookies.btn);
         $(".cc-message").html(data.cookies.txt+'<br><a class="cc-link" target="_blank" href="https://cookiesandyou.com/">'+data.cookies.link+'</a>');

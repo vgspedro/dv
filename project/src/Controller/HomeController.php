@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 /*https://github.com/nojacko/email-validator*/
 use EmailValidator\EmailValidator;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class HomeController extends AbstractController
 {
@@ -37,60 +40,51 @@ class HomeController extends AbstractController
             'menus' => $this->menu()
         ));
     }
-
-    public function email(Request $request, \Swift_Mailer $mailer){
-
-        $err = array();
-
+    
+    public function email(Request $request, MailerInterface $mailer)
+    {
+        $err = [];
         $email = null;
 
         $request->request->get('name') ? $name = ucwords($request->request->get('name')) : $err[] = 'NAME';
         $request->request->get('email') ? $email = strtolower($request->request->get('email')) : $err[] = 'EMAIL';
         $request->request->get('msn') ? $msn = $request->request->get('msn') : $err[] = 'MSN';
         $request->request->get('privacy') ? false : $err[] = 'PRIVACY_TXT';
-        $request->request->get('locale');
 
-        if($err)
-            return new JsonResponse(array('message' => $err, 'status' => 0));
+        if ($err) {
+            return new JsonResponse(['message' => $err, 'status' => 0]);
+        }
 
-        if($this->mailIsValid($email)){
+        if ($this->mailIsValid($email)) {
             $err[] = $this->mailIsValid($email);
-            return new JsonResponse(array('message' => $err, 'status' => 0));
+            return new JsonResponse(['message' => $err, 'status' => 0]);
         }
-        
-        if (strlen($request->request->get('msn')) < 20){
+
+        if (strlen($msn) < 20) {
             $err[] = 'MSN_MIN_20_CHARS';
-            return new JsonResponse(array('message' => $err, 'status' => 0));
+            return new JsonResponse(['message' => $err, 'status' => 0]);
         }
-        
-        $transport = (new \Swift_SmtpTransport('mail.masivi.com', 465, 'ssl'))
-            ->setUsername('info@masivi.com')
-            ->setPassword($_ENV['MAIL_PASS']);
 
-            $mailer = new \Swift_Mailer($transport);
+        $from = $_ENV['MAIL'];
 
-            $message = (new \Swift_Message('Contato'))
-            
-                ->setFrom(['info@masivi.com' => 'masivi'])
-                ->setTo([$email => $name])
-                ->setBcc(['info@masivi.com' => 'masivi'])
-                ->setBody(
-                $this->renderView('emails/contact.html.twig', array(
-                    'name' => $name,
-                    'msn' => $msn
-                    )                           
-                        ),
-                    'text/html'
-                )
-                ->addPart('Olá '.$name.', em breve entraremos em contato. Mensagem: '.$msn.' Obrigado, MSV.', 'text/plain');
-            
-            $message->getHeaders()->addTextHeader('List-Unsubscribe', 'https://masivi.com'); 
-            
-            $mailer->send($message);
-                
-        return new JsonResponse(array('message' => 'success', 'status' => 1));
+        $emailMessage = (new TemplatedEmail())
+            ->from($from)
+            ->to($email)
+            ->bcc($from)
+            ->subject('Contato')
+            ->htmlTemplate('emails/contact.html.twig')
+            ->context([
+                'name' => $name,
+                'msn' => $msn,
+            ])
+            ->text('Olá '.$name.', em breve entraremos em contato. Mensagem: '.$msn.' Obrigado, MSV.');
+
+        $emailMessage->getHeaders()->addTextHeader('List-Unsubscribe', 'https://'.$_ENV['DOMAIN']);
+
+        $mailer->send($emailMessage);
+
+        return new JsonResponse(['message' => 'success', 'status' => 1]);
     }
-
 
     private function skills(){
         $skills[] = array('id' => 1, 'border'=>'#86befb', 'img'=>'images/ps.jpg', 'name'=>'ADOBE<br>PHOTOSHOP', 'alt'=>'adobe photoshop','percentage'=>80);
@@ -98,17 +92,19 @@ class HomeController extends AbstractController
         $skills[] = array('id' => 3, 'border'=>'#ff58a0', 'img'=>'images/id.jpg', 'name'=>'ADOBE<br>INDESIGN', 'alt'=>'adobe indesign','percentage'=>70);
         $skills[] = array('id' => 4, 'border'=>'#d473f8', 'img'=>'images/pr.jpg', 'name'=>'ADOBE<br>PREMIERE', 'alt'=>'adobre premiere','percentage'=>60);
         $skills[] = array('id' => 5, 'border'=>'#101152', 'img'=>'images/c4d.png', 'name'=>'CINEMA<br>4D', 'alt'=>'cinema 4d blender solid works','percentage'=>80);
+      /*
         $skills[] = array('id' => 6, 'border'=>'#84cd62', 'img'=>'images/paint.png', 'name'=>'MICROSOFT<br>PAINT', 'alt'=>'microsoft paint','percentage'=>12);
         $skills[] = array('id' => 7, 'border'=>'#2f0300', 'img'=>'images/joomla.png', 'name'=>'JOOMLA<br>&nbsp;', 'alt'=>'joomla','percentage'=>85);
         $skills[] = array('id' => 8, 'border'=>'#40871d', 'img'=>'images/android.png', 'name'=>'ANDROID<br>&nbsp;', 'alt'=>'android samsung huawei','percentage'=>80);
         $skills[] = array('border'=>'#E9E9E9', 'img'=>'images/jquery.png', 'name'=>'JQUERY<br>&nbsp;', 'alt'=>'jquery','percentage' => 80);
-        $skills[] = array('id' => 9, 'border'=>'#6E5400', 'img'=>'images/js.png', 'name'=>'JAVASCRIPT<br>&nbsp;', 'alt'=>'javascript','percentage' => 80);
+      */
+        $skills[] = array('id' => 9, 'border'=>'#6E5400', 'img'=>'images/js.png', 'name'=>'JAVASCRIPT<br>&nbsp;', 'alt'=>'javascript','percentage' => 85);
         $skills[] = array('id' => 10, 'border'=>'#791900', 'img'=>'images/html5.png', 'name'=>'HTML5<br>&nbsp;', 'alt'=>'html5','percentage' => 90);
-        $skills[] = array('id' => 11, 'border'=>'#014574', 'img'=>'images/html3.png', 'name'=>'CSS3<br>&nbsp;', 'alt'=>'css3 ','percentage'=>90);
-        $skills[] = array('id' => 12, 'border'=>'#FFE4B7', 'img'=>'images/mysql.png', 'name'=>'MYSQL<br>&nbsp;', 'alt'=>'mysql, pdo, orm, doctrine, mysqli','percentage' => 70);
-        $skills[] = array('id' => 13, 'border'=>'#000000', 'img'=>'images/sf.png', 'name'=>'SYMFONY<br>&nbsp;', 'alt'=>'symfony','percentage'=>75);
-        $skills[] = array('id' => 14, 'border'=>'#EAFFB4', 'img'=>'images/twig.jpg', 'name'=>'TWIG<br>&nbsp;', 'alt'=>'twig','percentage'=>75);
-        $skills[] = array('id' => 15, 'border'=>'#222430', 'img'=>'images/php.jpg', 'name'=>'PHP<br>&nbsp;', 'alt'=>'php','percentage'=>85);
+        //$skills[] = array('id' => 11, 'border'=>'#014574', 'img'=>'images/html3.png', 'name'=>'CSS3<br>&nbsp;', 'alt'=>'css3 ','percentage'=>90);
+        $skills[] = array('id' => 12, 'border'=>'#FFE4B7', 'img'=>'images/mysql.png', 'name'=>'MYSQL<br>&nbsp;', 'alt'=>'mysql, pdo, orm, doctrine, mysqli','percentage' => 90);
+        $skills[] = array('id' => 13, 'border'=>'#000000', 'img'=>'images/sf.png', 'name'=>'SYMFONY<br>&nbsp;', 'alt'=>'symfony','percentage'=> 95);
+        $skills[] = array('id' => 14, 'border'=>'#EAFFB4', 'img'=>'images/twig.jpg', 'name'=>'TWIG<br>&nbsp;', 'alt'=>'twig','percentage'=> 95);
+        $skills[] = array('id' => 15, 'border'=>'#222430', 'img'=>'images/php.jpg', 'name'=>'PHP<br>&nbsp;', 'alt'=>'php','percentage'=> 90);
         return $skills;
     } 
 
